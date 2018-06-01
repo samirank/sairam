@@ -1,0 +1,23 @@
+<?php
+include ('config.php');
+class validate {
+  
+  function __construct() {
+    $connect      = new dbconnect();
+    $this->mysqli = $connect->con();
+  }
+
+  function validate_login($user, $pswd) {
+    $mysqli = $this->mysqli;
+    $u_name = $mysqli->real_escape_string($user);
+    $pass   = $mysqli->real_escape_string($pswd);
+    $sql    = "SELECT user_id FROM users WHERE user_name='$u_name' and password='$pass'";
+    if (mysqli_num_rows($mysqli->query($sql)) == 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
+}
+?>

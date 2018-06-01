@@ -1,0 +1,37 @@
+:root{
+	--primary-color: #6cf;
+}
+html, body{
+	height: 100%;
+}
+body{
+	padding-bottom: 50px;
+}
+.container{
+	position: relative;
+	min-height: 100%;
+}
+footer{
+	position:relative;
+	bottom:0;
+	height:50px;
+	width: 100%;
+	background: var(--primary-color);
+}
+footer>div{
+	padding-top: 10px;
+}
+div#login-box {
+	height: 350px;
+	width: 350px;
+	position: relative;
+	margin: auto;
+	top: 150px;
+	border: 1px solid var(--primary-color);
+	border-radius: 20px;
+	padding: 20px;
+}
+#login-header{
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
