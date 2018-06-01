@@ -35,3 +35,10 @@ div#login-box {
 	margin-top: 10px;
 	margin-bottom: 20px;
 }
+.msg-box {
+    position: relative;
+    top: 165px;
+    margin: auto;
+    text-align: center;
+    color: red;
+}

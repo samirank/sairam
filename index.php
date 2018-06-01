@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,6 +28,11 @@
 				<button type="submit" name="login" class="btn btn-primary"  onclick="return encrypt();">Submit</button>
 			</form>	
 		</div>
+		<?php if (isset($_SESSION['msg'])): ?>
+			<div class="msg-box">
+				<?php echo $_SESSION['msg']; unset($_SESSION['msg']); ?>
+			</div>
+		<?php endif ?>
 	</div>
 	<footer>
 		<div class="text-center">&copy; Sairam Development Society 2018</div>

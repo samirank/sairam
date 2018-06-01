@@ -12,12 +12,12 @@ if (isset($_POST['login'])) {
     header("location: ../dashboard.php");
   }
   else {
-    $_SESSION['msg'] = "incorrect username/password";
+    $_SESSION['msg'] = "Incorrect username/password";
     header("location: ../index.php");
   }
 }
 else{
-  $_SESSION['msg'] = "incorrect username/password";
+  $_SESSION['msg'] = "Incorrect username/password";
   header("location: ../index.php");
 }
 ?>
