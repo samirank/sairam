@@ -18,7 +18,7 @@ class insert extends dbconnect {
 
   function add_staff($name, $user_name, $password)
    {
-    $mysqli       = $this->mysqli;
+    $mysqli = $this->mysqli;
     $sql = "INSERT INTO `users` (`user_id`, `name`, `password`, `user_role`, `user_name`, `status`) VALUES (NULL, '$name', '$password', 'staff', '$user_name', 'active')";
     if($mysqli->query($sql)){
       return true;
