@@ -1,10 +1,10 @@
 :root{
 	/*--primary-color: #6cf;*/
-	--primary-color: #0fbcf9;
-	--primary-dark: #03B9F6;
-	--primary-dark-2: #0184AF;
-	--primary-light: #3DCAF9;
-	--primary-light-2: #6AD4F7;
+	--primary-color: #0FBCF9;
+	--primary-dark: #2191FC;
+	--primary-dark-2: #3366FF;
+	--primary-light: #57D0FB;
+	--primary-light-2: #9FE4FD;
 }
 html, body{
 	height: 100%;
@@ -16,72 +16,34 @@ body{
 	position: relative;
 	min-height: 100%;
 }
-footer{
-	position:relative;
-	bottom:0;
-	height:50px;
-	width: 100%;
-	background: var(--primary-color);
-}
-footer>div{
-	padding-top: 10px;
+.bg-dark {
+  background-color: var(--primary-color) !important;
 }
 
-/* Fixed sidenav, full height */
-.sidenav {
-  height: 100%;
-  width: 200px;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: var(--primary-color);
-  overflow-x: hidden;
-  padding-top: 20px;
+@media (min-width: 992px){
+  #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
+    background: #fff;
+  }
 }
 
-/* Style the sidenav links and the dropdown button */
-.sidenav a, .dropdown-btn {
-  padding: 6px 8px 6px 16px;
-  text-decoration: none;
-  font-size: 20px;
-  color: #333;
-  display: block;
-  border: none;
-  background: none;
-  width:100%;
-  text-align: left;
-  cursor: pointer;
-  outline: none;
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item>.nav-link {
+    color: var(--primary-color);
 }
 
-/* On mouse-over */
-.sidenav a:hover, .dropdown-btn:hover {
-  color: #fff;
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item>.nav-link:hover {
+    color: #ddd;
+}
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level {
+    background: var(--primary-dark);
 }
 
-/* Main content */
-.main {
-  margin-left: 200px; /* Same as the width of the sidenav */
-  font-size: 20px; /* Increased text to enable scrolling */
-  padding: 0px 10px;
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a {
+    color: #fff;
 }
 
-/* Add an active class to the active dropdown button */
-.active {
-  background-color: var(--primary-light);
-  color: white;
+#mainNav.fixed-top.navbar-dark .sidenav-toggler {
+    background-color: var(--primary-light);
 }
-
-/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
-.dropdown-container {
-  display: none;
-  background-color: var(--primary-dark);
-  padding-left: 8px;
-}
-
-/* Optional: Style the caret down icon */
-.fa-caret-down {
-  float: right;
-  padding-right: 8px;
+body.sticky-footer {
+     margin-bottom: unset; 
 }
