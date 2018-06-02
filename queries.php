@@ -24,4 +24,9 @@ if ($mysqli->query($sql)) {
 	echo "<b>Created admin account<br><span style='color: green;'> username: 'admin'<br> password: '123'<br></b></span>";
 	$flag = 1;
 }
+
+
+if ($flag==0) {
+	echo "Nothing to change";
+}
 ?>
