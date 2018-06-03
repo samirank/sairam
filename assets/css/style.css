@@ -1,0 +1,87 @@
+:root{
+	/*--primary-color: #6cf;*/
+	--primary-color: #0fbcf9;
+	--primary-dark: #03B9F6;
+	--primary-dark-2: #0184AF;
+	--primary-light: #3DCAF9;
+	--primary-light-2: #6AD4F7;
+}
+html, body{
+	height: 100%;
+}
+body{
+	padding-bottom: 50px;
+}
+.container{
+	position: relative;
+	min-height: 100%;
+}
+footer{
+	position:relative;
+	bottom:0;
+	height:50px;
+	width: 100%;
+	background: var(--primary-color);
+}
+footer>div{
+	padding-top: 10px;
+}
+
+/* Fixed sidenav, full height */
+.sidenav {
+  height: 100%;
+  width: 200px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: var(--primary-color);
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+/* Style the sidenav links and the dropdown button */
+.sidenav a, .dropdown-btn {
+  padding: 6px 8px 6px 16px;
+  text-decoration: none;
+  font-size: 20px;
+  color: #333;
+  display: block;
+  border: none;
+  background: none;
+  width:100%;
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+}
+
+/* On mouse-over */
+.sidenav a:hover, .dropdown-btn:hover {
+  color: #fff;
+}
+
+/* Main content */
+.main {
+  margin-left: 200px; /* Same as the width of the sidenav */
+  font-size: 20px; /* Increased text to enable scrolling */
+  padding: 0px 10px;
+}
+
+/* Add an active class to the active dropdown button */
+.active {
+  background-color: var(--primary-light);
+  color: white;
+}
+
+/* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+.dropdown-container {
+  display: none;
+  background-color: var(--primary-dark);
+  padding-left: 8px;
+}
+
+/* Optional: Style the caret down icon */
+.fa-caret-down {
+  float: right;
+  padding-right: 8px;
+}
