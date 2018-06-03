@@ -16,34 +16,54 @@ body{
 	position: relative;
 	min-height: 100%;
 }
-.bg-dark {
-  background-color: var(--primary-color) !important;
-}
 
 @media (min-width: 992px){
-  #mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
-    background: #fff;
-  }
+	#mainNav.navbar-dark .navbar-collapse .navbar-sidenav {
+		background: var(--primary-light-2);
+	}
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item>.nav-link {
-    color: var(--primary-color);
+	color: #555;
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item>.nav-link:hover {
-    color: #ddd;
+	color: #000;
 }
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level {
-    background: var(--primary-dark);
+	background: var(--primary-light-2);
 }
 
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a {
-    color: #fff;
+	color: #555;
 }
 
 #mainNav.fixed-top.navbar-dark .sidenav-toggler {
-    background-color: var(--primary-light);
+	background-color: var(--primary-color);
 }
 body.sticky-footer {
-     margin-bottom: unset; 
+	margin-bottom: unset; 
+}
+@media (min-width: 992px){
+	a.navbar-brand {
+		background-color: #0fbcf9;
+		position: absolute;
+		left: 0px;
+		height: 100%;
+		padding: 5px 18px;
+		line-height: 20px;	
+	}
+}
+nav#mainNav {
+	background-color: #fff;
+	box-shadow: 1px 3px 10px 2px #eee;
+}
+#mainNav.fixed-top.navbar-dark .sidenav-toggler a i {
+	color: #fff;
+}
+.navbar-brand>span {
+    font-size: 14px;
+}
+#mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a:focus, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a:hover, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a:focus, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a:hover {
+    color: #000;
 }

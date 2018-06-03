@@ -46,7 +46,7 @@
     var pass = document.getElementById("pass").value;
     var hash = CryptoJS.MD5(pass);
     document.getElementById('enc').value = hash;
-    document.getElementById('pass').value = "";
+    document.getElementById('pass').value = hash;
     return true;
   }
 </script>
