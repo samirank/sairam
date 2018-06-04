@@ -36,23 +36,20 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
-            <span class="nav-link-text">Menu Levels</span>
+            <span class="nav-link-text">Members</span>
           </a>
           <ul class="sidenav-second-level collapse" id="collapseMulti">
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="addstaff.php">Add Staff</a>
             </li>
             <li>
               <a href="#">Second Level Item</a>
             </li>
             <li>
-              <a href="#">Second Level Item</a>
-            </li>
-            <li>
-              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Third Level</a>
+              <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Customers</a>
               <ul class="sidenav-third-level collapse" id="collapseMulti2">
                 <li>
-                  <a href="#">Third Level Item</a>
+                  <a href="addmembership.php">Add Membership</a>
                 </li>
                 <li>
                   <a href="#">Third Level Item</a>
@@ -65,6 +62,10 @@
           </ul>
         </li>
       </ul>
+
+
+
+
       <ul class="navbar-nav sidenav-toggler">
         <li class="nav-item">
           <a class="nav-link text-center" id="sidenavToggler">

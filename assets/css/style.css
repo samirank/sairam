@@ -67,3 +67,54 @@ nav#mainNav {
 #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a:focus, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-second-level>li>a:hover, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a:focus, #mainNav.navbar-dark .navbar-collapse .navbar-sidenav>.nav-item .sidenav-third-level>li>a:hover {
     color: #000;
 }
+
+.heading
+{
+	width: 30%;
+	margin:auto;
+	font-size: 20px;
+	font-family: arial;
+	color: blue;
+}
+
+input{padding: 1%}
+
+.main
+{
+	border: 2px solid burlywood;
+	width: 80%;
+	margin: auto;
+	padding: 2%;
+	border-radius: 20px;
+}
+
+.titles
+{
+	float: left;
+	width: 50%;
+	padding: 1%;
+	padding-left: 5%;
+	font-size: 17px;
+}
+
+.inputs{padding: 1%;
+float:center;}
+.btn
+{
+margin:auto;
+width: 20%;
+padding: 3%;
+}
+
+.botn
+{
+	background-color: lightsteelblue;
+	padding: 6%;
+	border: 2px solid;
+	border-radius: 10px;
+	font-weight: bold;
+	color: black;
+	width: 200%;
+}
+
+body{background-color: #ddd}
