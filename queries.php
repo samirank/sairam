@@ -25,8 +25,38 @@ if ($mysqli->query($sql)) {
 	$flag = 1;
 }
 
+// Create members table
+$sql ="CREATE TABLE `sairam`.`membership` (
+  `member_id` int(11) NOT NULL,
+  `account_no` varchar(50) NOT NULL,
+  `member_name` varchar(50) NOT NULL,
+  `member_age` int(50) NOT NULL,
+  `father_name` varchar(50) NOT NULL,
+  `present_address` text NOT NULL,
+  `present_pincode` int(50) NOT NULL,
+  `permanent_address` text NOT NULL,
+  `permanent_pincode` int(50) NOT NULL,
+  `instalment` varchar(100) NOT NULL,
+  `mode` varchar(50) NOT NULL,
+  `period` varchar(50) NOT NULL,
+  `occupation` int(11) NOT NULL,
+  `member_phone` int(11) NOT NULL,
+  `nominee_name` varchar(50) NOT NULL,
+  `nominee_age` int(50) NOT NULL,
+  `relationship` varchar(50) NOT NULL,
+  `photo` blob NOT NULL,
+  `signature` blob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+if ($mysqli->query($sql)) {
+	echo "Created members table<br>";
+	$flag = 1;
+}
+
 
 if ($flag==0) {
 	echo "Nothing to change";
 }
+
+
+
 ?>

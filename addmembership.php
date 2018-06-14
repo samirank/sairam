@@ -11,6 +11,8 @@
   <div class="card-body">
     <form action="action/newmembership.php" method="POST">
 
+
+
         <!-- Name -->
         <div class="form-group">
             <div class="form-row">
@@ -164,29 +166,7 @@
 </div>
 
 
-<!-- Username -->
-<div class="form-group">
-    <div class="form-row">
-        <label for="inputUsername">Username</label>
-        <input name="user_name" class="form-control" id="inputUsername" type="text" aria-describedby="nameHelp" placeholder="Enter user name" data-validation="required alphanumeric server" data-validation-param-name="username" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower" placeholder="Enter username">
-    </div>
-</div>
 
-
-
-
-<div class="form-group">
-    <div class="form-row">
-      <div class="col-md-6">
-        <label for="exampleInputPassword1">Password</label>
-        <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password" data-validation="strength" data-validation-strength="2">
-    </div>
-    <div class="col-md-6">
-        <label for="exampleConfirmPassword">Confirm password</label>
-        <input name="cnf-pass" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password" data-validation="confirmation" data-validation-confirm="password" data-validation-error-msg="Entered value do not match with your password.">
-    </div>
-</div>
-</div>
 
 <button type="submit" name="add_member" value="Add Staff" class="btn btn-primary btn-block"> Submit </button>
 </form>
