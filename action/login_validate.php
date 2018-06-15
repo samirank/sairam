@@ -1,6 +1,7 @@
 <?php
 session_start();
 include ('../class/validate.php');
+include ('../class/view.php');
 if (isset($_POST['login'])) {
   $user     = $_POST['username'];
   $pswd     = $_POST['enc'];

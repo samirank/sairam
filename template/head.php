@@ -33,6 +33,9 @@
             <span class="nav-link-text">Dashboard</span>
           </a>
         </li>
+
+
+        <!-- Admin menu -->
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
           <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
             <i class="fa fa-fw fa-sitemap"></i>
@@ -43,9 +46,9 @@
               <a href="addstaff.php">Add Staff</a>
             </li>
             <li>
-              <a href="#">Second Level Item</a>
+              <a href="viewstaff.php">View Staff</a>
             </li>
-            <li>
+            <!-- <li>
               <a class="nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti2">Customers</a>
               <ul class="sidenav-third-level collapse" id="collapseMulti2">
                 <li>
@@ -58,7 +61,7 @@
                   <a href="#">Third Level Item</a>
                 </li>
               </ul>
-            </li>
+            </li> -->
           </ul>
         </li>
       </ul>
@@ -77,9 +80,9 @@
         <li class="nav-item">
           <a class="nav-link text-dark" data-toggle="modal" data-target="#exampleModal">
             <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="content-wrapper">
-    <div id="contents" class="container-fluid">
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="content-wrapper">
+      <div id="contents" class="container-fluid">
