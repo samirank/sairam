@@ -19,7 +19,7 @@
       <div class="form-group">
         <div class="form-row">
           <label for="inputUsername">Username</label>
-          <input name="user_name" class="form-control" id="inputUsername" type="text" aria-describedby="nameHelp" placeholder="Enter user name" data-validation="required alphanumeric server" data-validation-param-name="username" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower" placeholder="Enter username">
+          <input name="user_name" class="form-control" id="inputUsername" type="text" aria-describedby="nameHelp" placeholder="Enter user name" data-validation="required alphanumeric server" data-validation-param-name="username" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower">
         </div>
       </div>
       <div class="form-group">

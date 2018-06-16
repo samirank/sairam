@@ -34,5 +34,19 @@ class validate {
       return false;
     }
   }
+
+
+  // Function to validate account number
+  function validate_accno($accno){
+    $mysqli = $this->mysqli;
+    $accno = $mysqli->real_escape_string($accno);
+    $sql    = "SELECT account_no FROM members WHERE account_no='$accno'";
+    if (mysqli_num_rows($mysqli->query($sql)) == 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }
 ?>
