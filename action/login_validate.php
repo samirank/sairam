@@ -9,7 +9,13 @@ if (isset($_POST['login'])) {
 
   $validate = new validate();
   if ($validate->validate_login($user, $pswd)) {
-    $_SESSION['login_id'] = $user;
+    $_SESSION['login_user'] = $user;
+    
+    $display = new display();
+    $result=$display->disp_cond("users","user_name='{$user}'");
+    $row=mysqli_fetch_assoc($result);
+    $_SESSION['login_id'] = $row['user_id'];
+    $_SESSION['login_role'] = $row['user_role'];
     header("location: ../dashboard.php");
   }
   else {

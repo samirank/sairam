@@ -46,16 +46,16 @@ body.sticky-footer {
 }
 @media (min-width: 992px){
 	a.navbar-brand {
-		background-color: #0fbcf9;
+		background-color: var(--primary-color);
 		position: absolute;
 		left: 0px;
 		height: 100%;
 		padding: 5px 18px;
-		line-height: 20px;	
+		line-height: 20px;
 	}
 }
 nav#mainNav {
-	background-color: #fff;
+	background-color: var(--primary-color);
 	box-shadow: 1px 3px 15px 2px #eee;
 }
 #mainNav.fixed-top.navbar-dark .sidenav-toggler a i {
