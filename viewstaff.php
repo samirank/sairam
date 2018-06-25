@@ -8,7 +8,7 @@ $result=$display->disp_all("users");
   <li class="breadcrumb-item">
     <a href="dashboard.php">Dashboard</a>
   </li>
-  <li class="breadcrumb-item active">Add staff</li>
+  <li class="breadcrumb-item active">View staff</li>
 </ol>
 <div class="card mb-3">
 

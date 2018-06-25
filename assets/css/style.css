@@ -88,3 +88,6 @@ div#contents {
   border: 1px solid;
   border-color: var(--primary-light-2) !important;
 }
+.bg-light-gray{
+	background-color: #eee;
+}

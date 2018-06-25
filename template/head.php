@@ -14,6 +14,7 @@
   <!-- Custom fonts for this template-->
   <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
+  <link href="assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <link href="assets/css/sb-admin.min.css" rel="stylesheet">
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
