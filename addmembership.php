@@ -1,11 +1,11 @@
 <?php include('template/head.php'); ?>
+<?php include('class/view.php'); ?>
 <ol class="breadcrumb">
   <li class="breadcrumb-item">
     <a href="dashboard.php">Dashboard</a>
   </li>
   <li class="breadcrumb-item active">Add member</li>
 </ol>
-
 
 
 <?php if (isset($_SESSION['msg'])): ?>
@@ -16,8 +16,6 @@
     </button>
   </div>
 <?php endif ?>
-
-
 
 
 <div class="card card-register mx-auto mt-5 border-primary">
@@ -62,22 +60,46 @@
         </div>
       </div>
 
-      <!-- Present ddress -->
+      <!-- Present address -->
       <div class="form-group">
         <div class="form-row">
           <label for="present_address">Present address</label>
-          <textarea name="present_address" class="form-control" data-validation="required" data-validation-error-msg="Please enter present address"></textarea>
-          <input name="present_pincode" class="form-control" type="text" aria-describedby="nameHelp" placeholder="781001" data-validation="required number length" data-validation-length="6" data-validation-error-msg="Please enter pin code" maxlength="6">
+          <textarea id="present_address" name="present_address" class="form-control" data-validation="required" data-validation-error-msg="Please enter present address"></textarea>
         </div>
       </div>
 
-      <!-- Permanent ddress -->
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Pin code</span>
+        </div>
+        <input id="present_pincode" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" name="present_pincode" class="form-control" type="text" placeholder="781023" data-validation="required number length" data-validation-length="6" data-validation-error-msg="Please enter pin code" maxlength="6">
+      </div>
+
+      <!-- Permanent address -->
       <div class="form-group">
         <div class="form-row">
+          <br>
           <label for="permanent_address">Permanent address</label>
-          <textarea name="permanent_address" class="form-control" data-validation="required" data-validation-error-msg="Please enter present address"></textarea>
-          <input name="permanent_pincode" class="form-control" type="text" aria-describedby="nameHelp" placeholder="781023" data-validation="required number length" data-validation-length="6" data-validation-error-msg="Please enter pin code" maxlength="6">
         </div>
+
+       <!--  <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="" id="sameAbove">
+          <label class="form-check-label" for="sameAbove">
+            Same as above
+          </label>
+        </div> -->
+
+        <div class="form-row">
+          <textarea id="permanent_address" name="permanent_address" class="form-control" data-validation="required" data-validation-error-msg="Please enter present address"></textarea>
+        </div>
+      </div>
+      
+
+      <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm">Pin code</span>
+        </div>
+        <input id="present_pincode" class="form-control" aria-label="Small" aria-describedby="inputGroup-sizing-sm" name="permanent_pincode" class="form-control" type="text" placeholder="781023" data-validation="required number length" data-validation-length="6" data-validation-error-msg="Please enter pin code" maxlength="6">
       </div>
 
 
@@ -111,7 +133,6 @@
       </div>
 
 
-
       <!-- Period -->
       <div class="form-group">
         <div class="form-row">
@@ -131,14 +152,14 @@
      <!-- Occupation -->
      <div class="form-group">
       <div class="form-row">
-        <label>Occupation</label>
+        <label>Occupation &emsp;</label>
         <div class="custom-control custom-radio custom-control-inline">
-          <input value="service" type="radio" id="occupation" name="occupation" class="custom-control-input" data-validation="required">
+          <input value="service" type="radio" id="occupation" name="occupation" class="custom-control-input">
           <label class="custom-control-label" for="occupation">Service</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input value="business" type="radio" id="customRadioInline2" name="occupation" class="custom-control-input">
-          <label class="custom-control-label" for="customRadioInline2">Business</label>
+          <input value="business" type="radio" id="customRadioInline2" name="occupation" class="custom-control-input" data-validation="required">
+          <label class="custom-control-label" for="customRadioInline2">Business&emsp;&emsp;</label>
         </div>
       </div>
     </div>
@@ -160,6 +181,7 @@
         <input name="nominee_name" class="form-control" id="nominee" type="text" aria-describedby="nameHelp" placeholder="Enter first name and last name" data-validation="required custom" data-validation-regexp="^([a-zA-Z]+\s)([a-zA-Z])+$" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only">
       </div>
     </div>
+
 
     <!-- Age of nominee -->
     <div class="form-group">
@@ -185,28 +207,60 @@
      </div>
    </div>
 
-   <!-- Photograph -->
+
+   <!-- Agent -->
    <div class="form-group">
     <div class="form-row">
-      <label for="Photograph">Photograph</label>
+      <label for="agent">Agent name</label>
       <div class="input-group">
-       <input type="file" name="photograph" class="form-control">
+       <select class="form-control" name="agent_id" data-validation="required">
+         <?php $display = new display();
+         $res_agents = $display->disp_all("agents"); ?>
+         <option selected disabled>Select</option>
+         <?php while ($row_agents = mysqli_fetch_assoc($res_agents)) { ?>
+           <option value="<?php echo $row_agents['agent_id']; ?>"><?php echo $row_agents['agent_name']; ?> (<?php echo $row_agents['email']; ?>)</option>
+        <?php } ?>
+       </select>
      </div>
    </div>
  </div>
 
- <!-- signature -->
- <div class="form-group">
-  <div class="form-row">
-    <label for="signature">Signature</label>
-    <div class="input-group">
-     <input type="file" name="signature" class="form-control">
-   </div>
- </div>
+ <!-- Photograph -->
+ <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Photograph</span>
+  </div>
+  <div class="custom-file">
+    <input name="photograph" type="file" class="custom-file-input" id="inputGroupFile01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
+</div>
+
+<!-- signature -->
+<div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Signature</span>
+  </div>
+  <div class="custom-file">
+    <input name="signature" type="file" class="custom-file-input" id="inputGroupFile01">
+    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+  </div>
 </div>
 
 <button type="submit" name="add_member" value="Add Staff" class="btn btn-primary btn-block"> Submit </button>
 </form>
 </div>
 </div>
+<script>
+  $(function(){
+    ("#sameAbove").click(function(){
+      if($(this).is(':checked')){     
+        var present_address=$("#present_address").val();
+        var present_pincode=$("#present_pincode").val();
+        $("#permanent_address").val(present_address);
+        $("#permanent_pincode").val(present_pincode);
+      }
+    });
+  });
+</script>
 <?php include('template/foot.php'); ?>

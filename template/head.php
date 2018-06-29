@@ -39,16 +39,30 @@
         <?php if ($_SESSION['login_role']=="admin"): ?>
           <!-- Admin menu -->
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseStaff" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-sitemap"></i>
               <span class="nav-link-text">Staff</span>
             </a>
-            <ul class="sidenav-second-level collapse" id="collapseMulti">
+            <ul class="sidenav-second-level collapse" id="collapseMStaff>
               <li>
                 <a href="addstaff.php">Add Staff</a>
               </li>
               <li>
                 <a href="viewstaff.php">View Staff</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseAgent" data-parent="#exampleAccordion">
+              <i class="fa fa-fw fa-suitcase"></i>
+              <span class="nav-link-text">Agent</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseAgent">
+              <li>
+                <a href="addagent.php">Add Agent</a>
+              </li>
+              <li>
+                <a href="viewagent.php">View Agent</a>
               </li>
             </ul>
           </li>

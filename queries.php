@@ -31,8 +31,24 @@ if ($mysqli->query($sql)) {
 	echo "Created members table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `members` ADD `agent_id` INT NOT NULL AFTER `relationship`;";
+$mysqli->query($sql);
 
+// Create agents table
+$sql = "CREATE TABLE `sairam`.`agents` ( `agent_id` INT NOT NULL AUTO_INCREMENT , `agent_name` VARCHAR(50) NOT NULL , `phno` VARCHAR(10) NOT NULL , `address` TEXT NOT NULL , `age` INT NOT NULL , `email` VARCHAR(50) NOT NULL , `status` VARCHAR(10) NOT NULL , PRIMARY KEY (`agent_id`)) ENGINE = InnoDB;";
+if ($mysqli->query($sql)) {
+	echo "Created agents table<br>";
+	$flag = 1;
+}
+$sql = "ALTER TABLE `agents` ADD `profile_pic` VARCHAR(50) NULL AFTER `email`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `agents` CHANGE `status` `status` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'active';";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `agents` ADD UNIQUE(`email`);";
+$mysqli->query($sql);
 
+// All query goes above this
+// No changes
 if ($flag==0) {
 	echo "Nothing to change";
 }
