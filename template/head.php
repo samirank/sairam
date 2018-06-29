@@ -43,7 +43,7 @@
               <i class="fa fa-fw fa-sitemap"></i>
               <span class="nav-link-text">Staff</span>
             </a>
-            <ul class="sidenav-second-level collapse" id="collapseStaff>
+            <ul class="sidenav-second-level collapse" id="collapseStaff">
               <li>
                 <a href="addstaff.php">Add Staff</a>
               </li>
