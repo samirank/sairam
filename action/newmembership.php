@@ -37,7 +37,7 @@ if (isset($_POST['add_member'])) {
 
   $create = new insert();
   if(!$create->add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature, $joining_agent, $joining_date)){
-    $insert_msg = "Unable to add agent please check the data you have entered.";
+    $insert_msg = "Unable to add member please check the data you have entered.";
     $insert_err=1;
   }
   $msg = array(

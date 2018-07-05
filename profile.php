@@ -161,6 +161,40 @@ if($_SESSION['login_role']=="admin"){
 			<div class="col">Relationship :</div>
 			<div class="col"><?php echo $row['relationship']; ?></div>
 		</div>
+		<div class="row p-2">
+			<div class="col">Joining agent :</div>
+			<div class="col">
+				<?php 
+				$cndtn = "agent_id=".$row['joining_agent'];
+				$result_joining_agnt = $display->disp_cond("agents", $cndtn);
+				$row_joining_agent = mysqli_fetch_assoc($result_joining_agnt);
+				echo $row_joining_agent['agent_name'];
+				?>
+			</div>
+		</div>
+		<div class="row p-2 bg-light-gray">
+			<div class="col">Current agent :</div>
+			<div class="col">
+				<?php 
+				$cndtn = "agent_id=".$row['current_agent'];
+				$result_joining_agnt = $display->disp_cond("agents", $cndtn);
+				$row_current_agent = mysqli_fetch_assoc($result_joining_agnt);
+				echo $row_current_agent['agent_name'];
+				?>
+			</div>
+		</div>
+		<div class="row p-2">
+			<div class="col">Joining date :</div>
+			<div class="col"><?php echo $row['joining_date']; ?></div>
+		</div>
+		<div class="row p-2 bg-light-gray">
+			<div class="col">Last updated on :</div>
+			<div class="col"><?php echo $row['last_updated_on']; ?></div>
+		</div>
+		<div class="row p-2">
+			<div class="col">Status :</div>
+			<div class="col"><?php echo $row['status']; ?></div>
+		</div>
 	</div>
 
 	<!-- Change photo modal -->
