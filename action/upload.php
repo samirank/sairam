@@ -4,7 +4,7 @@ function upload_photo($account_no){
   $GLOBALS['upload_err'] = 0;
   $imageFileType    = pathinfo($_FILES["photograph"]["name"], PATHINFO_EXTENSION);
   $target_dir = "../uploads/";
-  $target_file = $target_dir.$account_no."_sign.".$imageFileType;
+  $target_file = $target_dir."photo_".$account_no."_".str_replace(".", "_", microtime(true)).".".$imageFileType;
   $uploadOk = 1;
   $GLOBALS['photo'] = null;
 
@@ -54,7 +54,7 @@ function upload_signature($account_no){
   $GLOBALS['upload_err'] = 0;
   $imageFileType    = pathinfo($_FILES["signature"]["name"], PATHINFO_EXTENSION);
   $target_dir = "../uploads/";
-  $target_file = $target_dir.$account_no."_sign.".$imageFileType;
+  $target_file = $target_dir."sign_".$account_no."_".str_replace(".", "_", microtime(true)).".".$imageFileType;
   $uploadOk = 1;
   $GLOBALS['signature'] = null;
 
@@ -101,12 +101,12 @@ function upload_signature($account_no){
 
 
 
-// Function to upload signature (returns URL)
+// Function to agent photograph
 function upload_agent_photo($account_no){
   $GLOBALS['upload_err'] = 0;
   $imageFileType    = pathinfo($_FILES["photograph"]["name"], PATHINFO_EXTENSION);
   $target_dir = "../uploads/";
-  $target_file = $target_dir.$account_no."_agent.".$imageFileType;
+  $target_file = $target_dir."agent_".$account_no."_".str_replace(".", "_", microtime(true)).".".$imageFileType;
   $uploadOk = 1;
   $GLOBALS['photograph'] = null;
 

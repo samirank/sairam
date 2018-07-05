@@ -5,10 +5,10 @@ class insert extends dbconnect {
     $connect      = new dbconnect();
     $this->mysqli = $connect->con();
   }
-  function add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature)
+  function add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature, $joining_agent)
   {
     $mysqli       = $this->mysqli;
-    $sql = "INSERT INTO `members` (`account_no`, `member_name`, `member_age`, `father_name`, `present_address`, `present_pincode`, `permanent_address`, `permanent_pincode`, `instalment`, `mode`, `period`, `occupation`, `member_phone`, `nominee_name`, `nominee_age`, `relationship`, `agent_id`, `photo`, `signature`) VALUES ('$account_no', '$member_name', '$member_age', '$father_name', '$present_address', '$present_pincode', '$permanent_address', '$permanent_pincode', '$instalment', '$mode', '$period', '$occupation', '$member_phone', '$nominee_name', '$nominee_age', '$relationship', '$agent_id', '$photo', '$signature')";
+    $sql = "INSERT INTO `members` (`account_no`, `member_name`, `member_age`, `father_name`, `present_address`, `present_pincode`, `permanent_address`, `permanent_pincode`, `instalment`, `mode`, `period`, `occupation`, `member_phone`, `nominee_name`, `nominee_age`, `relationship`, `joining_agent`, `photo`, `signature`) VALUES ('$account_no', '$member_name', '$member_age', '$father_name', '$present_address', '$present_pincode', '$permanent_address', '$permanent_pincode', '$instalment', '$mode', '$period', '$occupation', '$member_phone', '$nominee_name', '$nominee_age', '$relationship', '$joining_agent', '$photo', '$signature')";
     if($mysqli->query($sql)){
       return true;
     }else{
@@ -18,10 +18,10 @@ class insert extends dbconnect {
   }
 
 // Add staff
-  function add_staff($name, $user_name, $password)
+  function add_staff($name, $user_name, $password, $staff_phone, $address)
   {
     $mysqli = $this->mysqli;
-    $sql = "INSERT INTO `users` (`user_id`, `name`, `password`, `user_role`, `user_name`, `status`) VALUES (NULL, '$name', '$password', 'staff', '$user_name', 'active')";
+    $sql = "INSERT INTO `users` (`name`, `password`, `user_role`, `user_name` ,`phone`, `address`, `status`) VALUES ('$name', '$password', 'staff', '$user_name', '$staff_phone', '$address', 'active')";
     if($mysqli->query($sql)){
       return true;
     }else{

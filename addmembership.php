@@ -9,13 +9,25 @@
 
 
 <?php if (isset($_SESSION['msg'])): ?>
-  <div class='alert alert-<?php if(isset($_GET['err'])){ echo 'danger'; }else{ echo 'success'; } ?> alert-dismissible fade show col-sm-11' role='alert'>
-    <?php echo $_SESSION['msg']; unset($_SESSION['msg']); ?>
+  <?php $msg = $_SESSION['msg']; unset($_SESSION['msg']); ?>
+  <!-- Insert message -->
+  <div class='alert alert-<?php if($msg['insert_err']==0){echo "success";}else{echo "danger";} ?> alert-dismissible fade show col-sm-11' role='alert'>
+    <?php echo $msg['insert_msg']; ?>
     <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
       <span aria-hidden='true'>&times;</span>
     </button>
   </div>
+
+  <?php if ($msg['upload_err']==1): ?>
+    <div class='alert alert-<?php if($msg['upload_err']==0){echo "success";}else{echo "danger";} ?> alert-dismissible fade show col-sm-11' role='alert'>
+      <?php echo $msg['upload_msg']; ?>
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+        <span aria-hidden='true'>&times;</span>
+      </button>
+    </div>
+  <?php endif ?>
 <?php endif ?>
+
 
 
 <div class="card card-register mx-auto mt-5 border-primary">
@@ -213,7 +225,7 @@
     <div class="form-row">
       <label for="agent">Agent name</label>
       <div class="input-group">
-       <select class="form-control" name="agent_id" data-validation="required">
+       <select class="form-control" name="joining_agent" data-validation="required">
          <?php $display = new display();
          $res_agents = $display->disp_all("agents"); ?>
          <option selected disabled>Select</option>

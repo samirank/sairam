@@ -5,11 +5,11 @@ if (isset($_POST['add_staff'])) {
   $user_name = $_POST['user_name'];
   $password = $_POST['password'];
   $encpassword=md5(md5($password));
-  $user_role = $_POST['user_role'];
-  $status = $_POST['status'];
+  $staff_phone = $_POST['staff_phone'];
+  $address = $_POST['address'];
  
   $create = new insert();
-  $result = $create->add_staff($name, $user_name, $encpassword, $user_name, $user_role, $status);
+  $result = $create->add_staff($name, $user_name, $encpassword, $user_name, $staff_phone, $address);
   header("location:../dashboard.php?msg=Success.");;
 }
 ?>

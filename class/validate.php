@@ -48,5 +48,55 @@ class validate {
       return false;
     }
   }
+
+
+
+  // Validate staff phone number
+  function validate_staff_phone($staff_phone){
+   $mysqli = $this->mysqli;
+   $staff_phone = $mysqli->real_escape_string($staff_phone);
+   $sql    = "SELECT phone FROM users WHERE phone='$staff_phone'";
+   if (mysqli_num_rows($mysqli->query($sql)) == 1) {
+    return true;
+  }
+  else {
+    return false;
+  } 
+}
+
+
+// Change user name
+function change_username($username,$user_id){
+  $mysqli = $this->mysqli;
+   $username = $mysqli->real_escape_string($username);
+   $user_id = $mysqli->real_escape_string($user_id);
+  $sql    = "SELECT user_id FROM users WHERE NOT user_id='$user_id' AND user_name='$username'";
+  if (mysqli_num_rows($mysqli->query($sql)) == 1) {
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+  // Validate staff phone number
+  function change_staff_phone($staff_phone,$user_id){
+   $mysqli = $this->mysqli;
+   $staff_phone = $mysqli->real_escape_string($staff_phone);
+   $sql    = "SELECT phone FROM users WHERE NOT user_id='$user_id' AND phone='$staff_phone'";
+   if (mysqli_num_rows($mysqli->query($sql)) == 1) {
+    return true;
+  }
+  else {
+    return false;
+  } 
+}
+
+
+
+
+
+
+// End of class
 }
 ?>

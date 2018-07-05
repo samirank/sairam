@@ -22,6 +22,23 @@
           <input name="user_name" class="form-control" id="inputUsername" type="text" aria-describedby="nameHelp" placeholder="Enter user name" data-validation="required alphanumeric server" data-validation-param-name="username" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower">
         </div>
       </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <div class="form-row">
+          <label for="phno">Phone</label>
+          <input class="form-control" data-validation="required number length server" data-validation-param-name="staff_phone" data-validation-url="action/form_validate.php" data-validation-length="10" data-validation-error-msg="Please enter 10 digit mobile number" type="text" name="staff_phone" maxlength="10">
+        </div>
+      </div>
+
+      <!-- Address -->
+      <div class="form-group">
+        <div class="form-row">
+          <label for="address">Address</label>
+          <textarea id="address" name="address" class="form-control" data-validation="required" data-validation-error-msg="Please enter address"></textarea>
+        </div>
+      </div>
+
       <div class="form-group">
         <div class="form-row">
           <div class="col-md-6">

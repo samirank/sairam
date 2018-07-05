@@ -11,6 +11,8 @@ if ($mysqli->query($sql)) {
 	echo "Created users table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `users` ADD `phone` VARCHAR(10) NOT NULL AFTER `name`, ADD `address` TEXT NOT NULL AFTER `phone`;";
+$mysqli->query($sql);
 
 // Change default status of user to 'active'
 $sql = "ALTER TABLE `users` CHANGE `status` `status` VARCHAR(15) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'active';";
@@ -32,6 +34,10 @@ if ($mysqli->query($sql)) {
 	$flag = 1;
 }
 $sql = "ALTER TABLE `members` ADD `agent_id` INT NOT NULL AFTER `relationship`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `members` CHANGE `agent_id` `joining_agent` INT(11) NOT NULL;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `members` ADD `current_agent` INT NOT NULL AFTER `joining_agent`, ADD `joining_date` DATE NOT NULL AFTER `current_agent`, ADD `added_on` DATE NOT NULL AFTER `joining_date`, ADD `last_updated_on` DATE NOT NULL AFTER `added_on`, ADD `status` VARCHAR(20) NOT NULL DEFAULT 'active' AFTER `last_updated_on`;";
 $mysqli->query($sql);
 
 // Create agents table
