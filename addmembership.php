@@ -237,6 +237,16 @@
    </div>
  </div>
 
+ <!-- joining date -->
+     <div class="form-group">
+      <div class="form-row">
+        <label for="joining_date">Date of joining</label>
+        <div class="input-group">
+         <input type="date" class="form-control" name="joining_date" data-validation="required" data-validation-error-msg="Please select joining date">
+       </div>
+     </div>
+   </div>
+
  <!-- Photograph -->
  <div class="input-group mb-3">
   <div class="input-group-prepend">

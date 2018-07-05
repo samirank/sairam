@@ -5,10 +5,10 @@ class insert extends dbconnect {
     $connect      = new dbconnect();
     $this->mysqli = $connect->con();
   }
-  function add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature, $joining_agent)
+  function add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature, $joining_agent, $joining_date)
   {
     $mysqli       = $this->mysqli;
-    $sql = "INSERT INTO `members` (`account_no`, `member_name`, `member_age`, `father_name`, `present_address`, `present_pincode`, `permanent_address`, `permanent_pincode`, `instalment`, `mode`, `period`, `occupation`, `member_phone`, `nominee_name`, `nominee_age`, `relationship`, `joining_agent`, `photo`, `signature`) VALUES ('$account_no', '$member_name', '$member_age', '$father_name', '$present_address', '$present_pincode', '$permanent_address', '$permanent_pincode', '$instalment', '$mode', '$period', '$occupation', '$member_phone', '$nominee_name', '$nominee_age', '$relationship', '$joining_agent', '$photo', '$signature')";
+    $sql = "INSERT INTO `members`(`account_no`, `member_name`, `member_age`, `father_name`, `present_address`, `present_pincode`, `permanent_address`, `permanent_pincode`, `instalment`, `mode`, `period`, `occupation`, `member_phone`, `nominee_name`, `nominee_age`, `relationship`, `joining_agent`, `current_agent`, `joining_date`, `added_on`, `last_updated_on`, `status`, `photo`, `signature`) VALUES ($account_no,$member_name,$member_age,$father_name,$present_address,$present_pincode,$permanent_address,$permanent_pincode,$instalment,$mode,$period,$occupation,$member_phone,$nominee_name,$nominee_age,$relationship,$joining_agent,$joining_agent,$joining_date,now(),now(),NULL,$photo,$signature)";
     if($mysqli->query($sql)){
       return true;
     }else{
