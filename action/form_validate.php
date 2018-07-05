@@ -51,6 +51,34 @@ if (isset($_POST['account_number'])) {
 	echo json_encode($response);
 }
 
+
+
+
+if (isset($_POST['deposit_account'])) {
+	$response = array(
+		'valid'          => false,
+		'message'        => 'Post argument "account_number" is missing.'
+	);
+
+	$validate = new validate();
+	$user     = $validate->validate_accno($_POST['deposit_account']);
+
+	if (!$user) {
+    // User name is registered on another account
+		$response = array(
+			'valid'          => false,
+			'message'        => 'Account does not exist'
+		);
+	}
+	else {
+    // User name is available
+		$response = array(
+			'valid' => true
+		);
+	}
+	echo json_encode($response);
+}
+
 // Validate staff phone number
 if (isset($_POST['staff_phone'])) {
 	$response = array(

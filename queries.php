@@ -53,6 +53,13 @@ $mysqli->query($sql);
 $sql = "ALTER TABLE `agents` ADD UNIQUE(`email`);";
 $mysqli->query($sql);
 
+// Deposit table
+$sql="CREATE TABLE `sairam`.`deposit` ( `deposit_id` INT NOT NULL AUTO_INCREMENT , `account_id` INT NOT NULL , `amount` INT NOT NULL , `date` DATE NOT NULL , `staff_id` INT NOT NULL , PRIMARY KEY (`deposit_id`)) ENGINE = InnoDB;";
+if ($mysqli->query($sql)) {
+	echo "Created deposit table<br>";
+	$flag = 1;
+}
+
 // All query goes above this
 // No changes
 if ($flag==0) {

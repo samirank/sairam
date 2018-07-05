@@ -81,17 +81,31 @@
         <?php if ($_SESSION['login_role']=="staff"): ?>
           <!-- Staff menu -->
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
-            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseMulti" data-parent="#exampleAccordion">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsemembers" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-sitemap"></i>
               <span class="nav-link-text">Members</span>
             </a>
-            <ul class="sidenav-second-level collapse" id="collapseMulti">
+            <ul class="sidenav-second-level collapse" id="collapsemembers">
               <li>
                 <a href="addmembership.php">Add members</a>
               </li>
               <li>
                 <a href="viewmembers.php">View members</a>
               </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsedeposit" data-parent="#exampleAccordion">
+              <i class="fa fa-fw fa-money"></i>
+              <span class="nav-link-text">Deposit</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapsedeposit">
+              <li>
+                <a href="makedeposit.php">Make deposit</a>
+              </li>
+              <!-- <li>
+                <a href="viewmembers.php">View members</a>
+              </li> -->
             </ul>
           </li>
           <!-- Staff menu ends -->  
