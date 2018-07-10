@@ -1,4 +1,5 @@
 <?php include('session.php'); ?>
+<?php $script = null; ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,7 +20,7 @@
   <link href="assets/css/style.css" rel="stylesheet">
 </head>
 
-<body class="fixed-nav sticky-footer bg-dark" id="page-top">
+<body class="fixed-nav sticky-footer" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
     <a class="navbar-brand" href="index.html">Sairam <br> <span>Development Society</span></a>

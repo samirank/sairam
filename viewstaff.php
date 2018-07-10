@@ -13,7 +13,7 @@ $result=$display->disp_all("users");
 <div class="card mb-3">
 
   <div class="card-header">
-    <i class="fa fa-table"></i> Data Table Example</div>
+    <i class="fa fa-table"></i> Staff</div>
     <div class="card-body">
       <div class="table-responsive">
         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

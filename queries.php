@@ -33,9 +33,7 @@ if ($mysqli->query($sql)) {
 	echo "Created members table<br>";
 	$flag = 1;
 }
-$sql = "ALTER TABLE `members` ADD `agent_id` INT NOT NULL AFTER `relationship`;";
-$mysqli->query($sql);
-$sql = "ALTER TABLE `members` CHANGE `agent_id` `joining_agent` INT(11) NOT NULL;";
+$sql = "ALTER TABLE `members` ADD `joining_agent` INT NOT NULL AFTER `relationship`;";
 $mysqli->query($sql);
 $sql = "ALTER TABLE `members` ADD `current_agent` INT NOT NULL AFTER `joining_agent`, ADD `joining_date` DATE NOT NULL AFTER `current_agent`, ADD `added_on` DATE NOT NULL AFTER `joining_date`, ADD `last_updated_on` DATE NOT NULL AFTER `added_on`, ADD `status` VARCHAR(20) NOT NULL DEFAULT 'active' AFTER `last_updated_on`;";
 $mysqli->query($sql);
@@ -59,6 +57,14 @@ if ($mysqli->query($sql)) {
 	echo "Created deposit table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `deposit` CHANGE `date` `date_of_payment` DATE NOT NULL;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `deposit` CHANGE `account_id` `account_no` INT(11) NOT NULL;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `deposit` ADD `inserted_on` DATE NOT NULL AFTER `date_of_payment`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `members` ADD `rate_of_interest` FLOAT(2) NULL AFTER `last_updated_on`;";
+$mysqli->query($sql);
 
 // All query goes above this
 // No changes

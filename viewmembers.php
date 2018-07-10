@@ -38,9 +38,16 @@ $result = $display->disp_all("members");
 								<td><?php echo $row['mode']; ?></td>
 								<td><?php echo $row['period']; ?></td>
 								<td>
-									<a href="profile.php?mem=<?php echo $row['account_no']; ?>">View</a>
-									&nbsp;
-									<a href="edit_profile.php?mem=<?php echo $row['account_no']; ?>">Edit</a>
+									<div class="btn-group" role="group">
+										<button id="profileoptions<?php echo $row['user_id']; ?>" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+											Options
+										</button>
+										<div class="dropdown-menu" aria-labelledby="profileoptions<?php echo $row['user_id']; ?>">
+											<a class="dropdown-item" href="profile.php?mem=<?php echo $row['account_no']; ?>">View</a>
+											<a class="dropdown-item" href="edit_profile.php?mem=<?php echo $row['account_no']; ?>">Edit</a>
+											<a class="dropdown-item"  href="makedeposit.php?acc=<?php echo $row['account_no']; ?>">Deposit</a>
+										</div>
+									</div>
 								</td>
 							</tr>
 						<?php } ?>

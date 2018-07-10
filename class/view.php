@@ -33,5 +33,18 @@ class display extends dbconnect {
       echo $mysqli->error;
     }
   }
+
+// Function to display current balance
+  function display_current_balance($account_no){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT SUM(amount) AS 'current_balance' FROM `deposit` WHERE account_no='$account_no';";
+    if ($val = $mysqli->query($sql)) return $val;
+    else {
+      echo $mysqli->error;
+    }
+  }
+
+
+// End of class 
 }
 ?>

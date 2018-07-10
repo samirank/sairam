@@ -53,6 +53,7 @@
 
  });
 </script>
+<?php echo $script; ?>
 </div>
 </body>
 

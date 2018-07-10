@@ -43,5 +43,17 @@ class insert extends dbconnect {
       return false;
     }
   }
+
+  // Make deposit
+  function make_deposit($instalment,$date_of_payment,$accno,$staff_id){
+    $mysqli = $this->mysqli;
+    $sql = "INSERT INTO `deposit`(`account_no`, `amount`, `date_of_payment`, `inserted_on`, `staff_id`) VALUES ('$accno','$instalment','$date_of_payment',now(),'$staff_id')";
+        if($mysqli->query($sql)){
+      return true;
+    }else{
+      // echo $mysqli->error;
+      return false;
+    }
+  }
 }
 ?>

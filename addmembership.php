@@ -47,7 +47,7 @@
       <div class="form-group">
         <div class="form-row">
           <label for="exampleInputName">Name</label>
-          <input name="member_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="John Doe" data-validation="required custom" data-validation-regexp="^([a-zA-Z]+\s)([a-zA-Z])+$" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only">
+          <input name="member_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" placeholder="John Doe" data-validation="required" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only">
         </div>
       </div>
 

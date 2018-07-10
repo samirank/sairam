@@ -91,3 +91,6 @@ div#contents {
 .bg-light-gray{
 	background-color: #eee;
 }
+.bg-primary-color{
+	background-color: var(--primary-color);
+}

@@ -58,15 +58,15 @@
 			<div class="col">Account number :</div>
 			<div class="col"><b><?php echo $row['account_no']; ?></b></div>
 		</div>
-		<div class="row p-2 bg-light-gray">
+		<div class="row p-2">
 			<div class="col">Installment :</div>
 			<div class="col">Rs. <?php echo $row['instalment']; ?></div>
 		</div>
-		<div class="row p-2">
+		<div class="row p-2 bg-light-gray">
 			<div class="col">Mode :</div>
 			<div class="col"><?php echo $row['mode']; ?></div>
 		</div>
-		<div class="row p-2 bg-light-gray">
+		<div class="row p-2">
 			<div class="col">Period :</div>
 			<div class="col"><?php echo $row['period']; ?> months</div>
 		</div>
@@ -95,7 +95,7 @@
 						</div>
 					</div>
 				</div>
-				<button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#confirm_deposit">
+				<button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="getAmt()" data-target="#confirm_deposit">
 					Submit
 				</button>
 				
@@ -117,8 +117,11 @@
 						Name : <b><?php echo $row['member_name']; ?></b>
 						<br>
 						Account No. : <b><?php echo $row['account_no']; ?></b>
+						<br>
+						Amount : <b>Rs. <span id="amtDiv"></span></b>
 					</div>
 					<div class="modal-footer">
+						<input type="hidden" name="accno" value="<?php echo $row['account_no']; ?>">
 						<button type="submit" name="make_deposit" class="btn btn-primary">Submit</button>
 					</div>
 				</div>
@@ -129,5 +132,16 @@
 <?php endif ?>
 
 
-
+<?php
+$script = "<script>
+function getAmt(){
+	var amount = document.getElementById('amount').value;
+	var amtDiv = document.getElementById('amtDiv');
+	if (amount == '') {
+		amount = '0.00';
+	}
+	amtDiv.innerHTML = amount;
+}
+</script>";
+?>
 <?php include('template/foot.php'); ?>

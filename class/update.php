@@ -51,6 +51,18 @@ class update extends dbconnect {
 		}	
 	}
 
+	// Change rate of interest
+	function change_interest($rate,$account_no){
+		$mysqli = $this->mysqli;
+		$sql = "UPDATE members SET `rate_of_interest`='$rate' WHERE `account_no`='$account_no';";
+		if($mysqli->query($sql)){
+			return true;
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}
+	}
+
 // End of class
 }
 ?>

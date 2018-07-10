@@ -52,7 +52,7 @@ $json = json_encode($json);
 		</li>
 		<?php if ($_SESSION['login_role']=="admin"): ?>
 			<li class="breadcrumb-item">
-				<a href="viewsaff.php">All staff</a>
+				<a href="viewstaff.php">All staff</a>
 			</li>
 		<?php endif ?>
 		<li class="breadcrumb-item active">Edit staff account</li>
