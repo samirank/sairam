@@ -73,6 +73,20 @@
               <span class="nav-link-text">View members</span>
             </a>
           </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseloan" data-parent="#exampleAccordion">
+              <i class="fa fa-fw fa-suitcase"></i>
+              <span class="nav-link-text">Loans</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapseloan">
+              <li>
+                <a href="newloan.php">New loan</a>
+              </li>
+              <li>
+                <a href="viewloans.php">View loans</a>
+              </li>
+            </ul>
+          </li>
           <!-- Admin menu ends -->
         <?php endif ?>
 

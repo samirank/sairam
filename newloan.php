@@ -1,11 +1,17 @@
 <?php include('template/head.php'); ?>
 <?php include('class/view.php'); ?>
+<ol class="breadcrumb">
+	<li class="breadcrumb-item">
+		<a href="dashboard.php">Dashboard</a>
+	</li>
+	<li class="breadcrumb-item active">New loan</li>
+</ol>
 
 <?php if (!isset($_GET['acc'])): ?>
 	<div class="card card-register mx-auto mt-5 border-primary">
 		<div class="card-header bg-primary-light-2">Enter account number</div>
 		<div class="card-body">
-			<form action="makedeposit.php" method="GET">
+			<form action="newloan.php" method="GET">
 
 				<!-- Name -->
 				<div class="form-group">
@@ -14,9 +20,6 @@
 						<input name="acc" class="form-control" id="inputAccno" type="text" aria-describedby="nameHelp" placeholder="12345" data-validation="required number server" data-validation-param-name="deposit_account" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower" autofocus>
 					</div>
 				</div>
-
-
-
 				<!-- Submit -->
 				<button type="submit" class="btn btn-primary btn-block"> Submit </button>
 
@@ -59,29 +62,64 @@
 			<div class="col"><b><?php echo $row['account_no']; ?></b></div>
 		</div>
 		<div class="row p-2">
-			<div class="col">Installment :</div>
-			<div class="col">Rs. <?php echo $row['instalment']; ?></div>
+			<div class="col">Age of applicant :</div>
+			<div class="col"><?php echo $row['member_age']; ?></div>
 		</div>
 		<div class="row p-2 bg-light-gray">
-			<div class="col">Mode :</div>
-			<div class="col"><?php echo $row['mode']; ?></div>
+			<div class="col">Present address :</div>
+			<div class="col"><?php echo $row['present_address']; ?></div>
+		</div>
+		<div class="row p-2 bg-light-gray">
+			<div class="col"></div>
+			<div class="col">Pin code: <?php echo $row['present_pincode']; ?></div>
 		</div>
 		<div class="row p-2">
-			<div class="col">Period :</div>
-			<div class="col"><?php echo $row['period']; ?> months</div>
+			<div class="col">Permanent address :</div>
+			<div class="col"><?php echo $row['permanent_address']; ?></div>
+		</div>
+		<div class="row p-2">
+			<div class="col"></div>
+			<div class="col">Pin code: <?php echo $row['permanent_pincode']; ?></div>
+		</div>
+		<div class="row p-2 bg-light-gray">
+			<div class="col">Father's name :</div>
+			<div class="col"><?php echo $row['father_name']; ?></div>
+		</div>
+		<div class="row p-2">
+			<div class="col">Occupation of applicant :</div>
+			<div class="col"><?php echo $row['occupation']; ?></div>
+		</div>
+		<div class="row p-2 bg-light-gray">
+			<div class="col">Applicant's phone number :</div>
+			<div class="col"><?php echo $row['member_phone']; ?></div>
 		</div>
 	</div>
 	<form action="action/deposit.php" method="POST">
 		<div class="row m-2 p-2">
 			<div class="offset-md-2 col-md-8">
+
+				<!-- Equal installment amount -->
 				<div class="form-group">
 					<div class="form-row">
-						<label for="amount">Enter amount</label>
+						<label for="amount">Enter installment amount</label>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<div class="input-group-text"> Rs.</div>
 							</div>
-							<input name="instalment" class="form-control" id="amount" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
+							<input name="installment" class="form-control" id="amount" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
+						</div>
+					</div>
+				</div>
+
+				<!-- Period -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="period">Period</label>
+						<div class="input-group">
+							<input name="installment" class="form-control" id="period" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
+						</div>
+						<div class="input-group">
+							<select class="form-control" name="mode" id=""></select>
 						</div>
 					</div>
 				</div>
@@ -131,17 +169,4 @@
 
 <?php endif ?>
 
-
-<?php
-$script = "<script>
-function getAmt(){
-	var amount = document.getElementById('amount').value;
-	var amtDiv = document.getElementById('amtDiv');
-	if (amount == '') {
-		amount = '0.00';
-	}
-	amtDiv.innerHTML = amount;
-}
-</script>";
-?>
 <?php include('template/foot.php'); ?>
