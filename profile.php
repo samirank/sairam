@@ -63,8 +63,8 @@ if($_SESSION['login_role']=="admin"){
 						View report
 					</button>
 					<div class="dropdown-menu" aria-labelledby="viewreport">
-						<a class="dropdown-item" href="transactionreport.php?acc=<?php echo $profile_id; ?>" target="_blank">Deposit account report</a>
-						<a class="dropdown-item" href="edit_profile.php?mem=<?php echo $row['account_no']; ?>">Edit</a>
+						<a class="dropdown-item" href="transactionreport.php?acc=<?php echo $profile_id; ?>" target="_blank">Account report</a>
+						<a class="dropdown-item" href="loanreport.php?mem=<?php echo $row['account_no']; ?>">Loan report</a>
 						<a class="dropdown-item"  href="makedeposit.php?acc=<?php echo $row['account_no']; ?>">Deposit</a>
 					</div>
 				</div>
@@ -97,18 +97,18 @@ if($_SESSION['login_role']=="admin"){
 
 	<ul class="nav nav-tabs" id="myTab" role="tablist">
 		<li class="nav-item">
-			<a class="nav-link <?php if(!isset($_GET['acc'])){ echo 'active'; } ?>" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="<?php if(!isset($_GET['acc'])){ echo 'true'; } ?>">Profile</a>
+			<a class="nav-link <?php if(!(isset($_GET['acc']) || isset($_GET['loan']))){ echo 'active'; } ?>" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="<?php if(!isset($_GET['acc'])){ echo 'true'; } ?>">Profile</a>
 		</li>
 		<li class="nav-item">
 			<a class="nav-link <?php if(isset($_GET['acc'])){ echo 'active'; } ?>" id="account-tab" data-toggle="tab" href="#account_details" role="tab" aria-controls="account_details" aria-selected="<?php if(isset($_GET['acc'])){ echo 'true'; } ?>">Account details</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Loan details</a>
+			<a class="nav-link <?php if(isset($_GET['loan'])){ echo 'active'; } ?>" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Loan details</a>
 		</li>
 	</ul>
 	<div class="tab-content" id="myTabContent">
 		<!-- Profile tab -->
-		<div class="tab-pane fade <?php if(!isset($_GET['acc'])){ echo 'show active'; } ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+		<div class="tab-pane fade <?php if(!(isset($_GET['acc']) || isset($_GET['loan']))){ echo 'show active'; } ?>" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 			<div class="offset-md-2 col-md-8 text-left border rounded mt-3">
 				<div class="row p-2">
 					<div class="col col-md-4 p-2">
@@ -285,7 +285,15 @@ if($_SESSION['login_role']=="admin"){
 				</div>
 			</div>
 		</div>
-		<div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+		<!-- Loan Tab -->
+		<div class="tab-pane fade <?php if(isset($_GET['loan'])){ echo 'show active'; } ?>" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+			<div class="offset-md-2 col-md-8 text-left border rounded mt-3">
+				<div class="row p-2">
+					<div class="col">Name :</div>
+					<div class="col"><b><?php echo $row['member_name']; ?></b></div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 
@@ -410,24 +418,27 @@ if($_SESSION['login_role']=="admin"){
 				<span aria-hidden='true'>&times;</span>
 			</button>
 		</div>
-
-		<?php if ($msg['upload_err']==1): ?>
-			<div class='alert alert-<?php if($msg['upload_err']==0){echo "success";}else{echo "danger";} ?> alert-dismissible fade show col-sm-11' role='alert'>
-				<?php echo $msg['upload_msg']; ?>
-				<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
-					<span aria-hidden='true'>&times;</span>
-				</button>
-			</div>
+		
+		<?php if (isset($msg['upload_err'])): ?>
+			<?php if ($msg['upload_err']==1): ?>
+				<div class='alert alert-<?php if($msg['upload_err']==0){echo "success";}else{echo "danger";} ?> alert-dismissible fade show col-sm-11' role='alert'>
+					<?php echo $msg['upload_msg']; ?>
+					<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+						<span aria-hidden='true'>&times;</span>
+					</button>
+				</div>
+			<?php endif ?>
 		<?php endif ?>
 	<?php endif ?>
-
+	
+	<!-- Top buttons -->
 	<div class="row">
 		<div class="col offset-md-2">
 			<div class="btn-group" role="group">
 				<button class="btn btn-primary" type="button" onclick="location.href='edit.php?staff=<?php echo $profile_id; ?>'">Edit profile</button>
-				<button class="btn btn-primary">Change password</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#changePasswordModal">Change Password</button>
 				<?php if ($_SESSION['login_role']=="admin"): ?>						
-					<button class="btn btn-primary">Suspend account</button>
+					<button class="btn btn-primary" data-toggle="modal" data-target="#suspendAccount">Suspend account</button>
 				<?php endif ?>
 			</div>	
 		</div>
@@ -453,6 +464,69 @@ if($_SESSION['login_role']=="admin"){
 		<div class="row p-2">
 			<div class="col">Account status</div>
 			<div class="col"><?php echo $row['status']; ?></div>
+		</div>
+	</div>
+
+
+	<!-- Change Password modal -->
+	<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="changePasswordModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="action/change_password.php" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="changePasswordModalLabel">Change Password</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<div class="form-row">
+								<label for="exampleInputPassword1">Enter Password</label>
+								<input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password" data-validation="strength" data-validation-strength="1">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="form-row">
+								<label for="exampleConfirmPassword">Confirm password</label>
+								<input name="cnf-pass" class="form-control" id="exampleConfirmPassword" type="password" placeholder="Confirm password" data-validation="confirmation" data-validation-confirm="password" data-validation-error-msg="Entered value do not match with your password.">
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<input type="hidden" name="role" value="<?php echo $row['user_role']; ?>">
+						<input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+						<button type="submit" name="change_password" class="btn btn-primary">Update password</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+	<!-- suspend account modal -->
+	<div class="modal fade" id="suspendAccount" tabindex="-1" role="dialog" aria-labelledby="suspendAccountLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form action="action/suspend_account.php" method="POST">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="suspendAccountLabel">Suspend Account</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						Are you sure you want to suspend account?<br>
+						Click 'yes' to proceed.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<input type="hidden" name="user_id" value="<?php echo $row['user_id']; ?>">
+						<button type="submit" name="suspend_account" class="btn btn-primary">Yes</button>
+					</div>
+				</div>
+			</form>
 		</div>
 	</div>
 

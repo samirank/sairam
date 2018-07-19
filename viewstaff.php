@@ -34,9 +34,9 @@ $result=$display->disp_all("users");
                 <td><?php echo $row['user_name']; ?></td>
                 <td><?php echo $row['phone']; ?></td>
                 <td><?php echo $row['status']; ?></td>
-                <td class="text-right">
+                <td class="text-right" style="width: 90px;">
                   <div class="btn-group" role="group">
-                    <button id="profileoptions" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button id="profileoptions" type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Options
                     </button>
                     <div class="dropdown-menu" aria-labelledby="profileoptions">

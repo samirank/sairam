@@ -80,12 +80,21 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapseloan">
               <li>
+                <a href="pay_installment.php">Pay installment</a>
+              </li>
+              <li>
                 <a href="newloan.php">New loan</a>
               </li>
               <li>
                 <a href="viewloans.php">View loans</a>
               </li>
             </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="messages.php">
+              <i class="fa fa-fw fa-envelope"></i>
+              <span class="nav-link-text">Messages</span>
+            </a>
           </li>
           <!-- Admin menu ends -->
         <?php endif ?>

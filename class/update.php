@@ -63,6 +63,29 @@ class update extends dbconnect {
 		}
 	}
 
+	// Change Password
+	function change_password($pass,$user_id){	
+		$mysqli = $this->mysqli;
+		$sql = "UPDATE users SET password='$pass' WHERE user_id='$user_id';";
+		if($mysqli->query($sql)){
+			return true;
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}
+	}
+	// Suspend account
+	function suspend_account($user_id) {
+		$mysqli = $this->mysqli;
+		$sql = "UPDATE users SET status='suspended' WHERE user_id='$user_id';";
+		if($mysqli->query($sql)){
+			return true;
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}	
+	}
+
 // End of class
 }
 ?>

@@ -94,3 +94,6 @@ div#contents {
 .bg-primary-color{
 	background-color: var(--primary-color);
 }
+.bg-primary-dark{
+	background-color: var(--primary-dark);
+}

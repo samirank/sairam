@@ -24,9 +24,10 @@ class insert extends dbconnect {
     $mysqli = $this->mysqli;
     $sql = "INSERT INTO `users` (`name`, `password`, `user_role`, `user_name` ,`phone`, `address`, `status`) VALUES ('$name', '$password', 'staff', '$user_name', '$staff_phone', '$address', 'active')";
     if($mysqli->query($sql)){
-      return true;
+      return $mysqli->insert_id;
     }else{
-      echo $mysqli->error;
+      // echo $mysqli->error;
+      return false;
     }
   }
 
@@ -48,7 +49,20 @@ class insert extends dbconnect {
   function make_deposit($instalment,$date_of_payment,$accno,$staff_id){
     $mysqli = $this->mysqli;
     $sql = "INSERT INTO `deposit`(`account_no`, `amount`, `date_of_payment`, `inserted_on`, `staff_id`) VALUES ('$accno','$instalment','$date_of_payment',now(),'$staff_id')";
-        if($mysqli->query($sql)){
+    if($mysqli->query($sql)){
+      return true;
+    }else{
+      // echo $mysqli->error;
+      return false;
+    }
+  }
+
+  // New loan
+  function new_loan($acc_no,$installment,$period,$mode,$rate_of_interest,$interest_calculated,$guarantor_name,$security_particulars,$loan_purpose,$loan_date,$closing_date,$approved_by,$added_by){
+    $mysqli = $this->mysqli;
+    $sql = "INSERT INTO `loans` (`loan_id`, `acc_no`, `installment`, `period`, `mode`, `rate_of_interest`, `interest_calculated`, `guarantor_name`, `security_particulars`, `loan_purpose`, `loan_date`, `closing_date`, `approved_by`, `added_on`, `last_updated_on`, `added_by`, `status`) VALUES (NULL, '$acc_no', '$installment', '$period', '$mode', '$rate_of_interest', '$interest_calculated', '$guarantor_name', '$security_particulars', '$loan_purpose', '$loan_date', '$closing_date', '$approved_by', now(), now(), '$added_by', 'active')";
+
+    if($mysqli->query($sql)){
       return true;
     }else{
       // echo $mysqli->error;

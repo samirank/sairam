@@ -3,7 +3,7 @@ session_start();
 include('../class/insert.php'); 
 $insert = new insert();
 if (isset($_POST['make_deposit'])) {
-	print_r($_POST);
+	// print_r($_POST);
 	$instalment = $_POST['instalment'];
 	$date_of_payment = $_POST['date_of_payment'];
 	$accno = $_POST['accno'];

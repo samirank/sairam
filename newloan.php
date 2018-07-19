@@ -61,7 +61,7 @@
 			<div class="col">Account number :</div>
 			<div class="col"><b><?php echo $row['account_no']; ?></b></div>
 		</div>
-		<div class="row p-2">
+<!-- 		<div class="row p-2">
 			<div class="col">Age of applicant :</div>
 			<div class="col"><?php echo $row['member_age']; ?></div>
 		</div>
@@ -92,9 +92,9 @@
 		<div class="row p-2 bg-light-gray">
 			<div class="col">Applicant's phone number :</div>
 			<div class="col"><?php echo $row['member_phone']; ?></div>
-		</div>
+		</div> -->
 	</div>
-	<form action="action/deposit.php" method="POST">
+	<form action="action/newloan_action.php" method="POST">
 		<div class="row m-2 p-2">
 			<div class="offset-md-2 col-md-8">
 
@@ -116,53 +116,99 @@
 					<div class="form-row">
 						<label for="period">Period</label>
 						<div class="input-group">
-							<input name="installment" class="form-control" id="period" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
-						</div>
-						<div class="input-group">
-							<select class="form-control" name="mode" id=""></select>
+							<input name="period" class="form-control" id="period" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
+							<select class="form-control col-3" name="mode" data-validation="required" data-validation-error-msg="Please select a value">
+								<option value="" selected disabled>Select</option>
+								<option value="days">days</option>
+								<option value="weeks">weeks</option>
+								<option value="months">months</option>
+								<option value="years">years</option>
+							</select>
 						</div>
 					</div>
 				</div>
 
-				<!-- Date of payment -->
+				<!-- Rate of interest -->
 				<div class="form-group">
 					<div class="form-row">
-						<label for="date_of_payment">Date of payment</label>
+						<label for="rate">Enter rate of interest</label>
 						<div class="input-group">
-							<input type="date" class="form-control" name="date_of_payment" data-validation="required" data-validation-error-msg="Please select date">
+							<input name="rate_of_interest" class="form-control" id="rate" type="text" data-validation="number" data-validation-allowing="float">
+							<div class="input-group-append">
+								<div class="input-group-text">%</div>
+							</div>
+							<select class="form-control col-2" name="interest_calculated">
+								<option value="pa">p/a</option>
+								<option value="pm">p/m</option>
+							</select>
 						</div>
 					</div>
 				</div>
-				<button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="getAmt()" data-target="#confirm_deposit">
-					Submit
-				</button>
-				
-			</div>
-		</div>
-		<!-- Deposit modal -->
-		<div class="modal fade" id="confirm_deposit" tabindex="-1" role="dialog" aria-labelledby="confirm_deposit" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h5 class="modal-title" id="confirm_deposit">Please confirm submit.</h5>
-						<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-							<span aria-hidden="true">×</span>
-						</button>
-					</div>
-					<div class="modal-body">
-						Cick submit to make dposit to the account.
-						<br>
-						Name : <b><?php echo $row['member_name']; ?></b>
-						<br>
-						Account No. : <b><?php echo $row['account_no']; ?></b>
-						<br>
-						Amount : <b>Rs. <span id="amtDiv"></span></b>
-					</div>
-					<div class="modal-footer">
-						<input type="hidden" name="accno" value="<?php echo $row['account_no']; ?>">
-						<button type="submit" name="make_deposit" class="btn btn-primary">Submit</button>
+
+				<!-- Name of guarantor -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="exampleInputName">Name of guarantor</label>
+						<input name="guarantor_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" data-validation="required" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only">
 					</div>
 				</div>
+
+				<!-- Particulars of securities -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="security_particulars" data-validation="required">Particulars of securities offered</label>
+						<input type="text" name="security_particulars" class="form-control" data-validation="required">
+					</div>
+				</div>
+
+				<!-- Purpose of loan -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="loan_purpose">Purpose of loan</label>
+						<input type="text" class="form-control" name="loan_purpose">
+						
+					</div>
+				</div>
+
+				<!-- Loan date -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="loan_date">Loan date</label>
+						<div class="input-group">
+							<input type="date" class="form-control" name="loan_date" data-validation="required" data-validation-error-msg="Please select date">
+						</div>
+					</div>
+				</div>
+
+				<!-- Closing date -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="closing_date">Closing date</label>
+						<div class="input-group">
+							<input type="date" class="form-control" name="closing_date" data-validation="required" data-validation-error-msg="Please select date">
+						</div>
+					</div>
+				</div>
+
+				<!-- Approved by -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="approved_by">Approved by</label>
+						<div class="input-group">
+							<select class="form-control" name="approved_by" data-validation="required">
+								<?php $display = new display();
+								$res_agents = $display->disp_all("agents"); ?>
+								<option selected disabled>Select</option>
+								<?php while ($row_agents = mysqli_fetch_assoc($res_agents)) { ?>
+									<option value="<?php echo $row_agents['agent_id']; ?>"><?php echo $row_agents['agent_name']; ?> (<?php echo $row_agents['email']; ?>)</option>
+								<?php } ?>
+							</select>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="acc_no" value="<?php echo $row['account_no']; ?>">
+				<button type="submit" name="new_loan" class="btn btn-block btn-primary">Submit</button>
+				
 			</div>
 		</div>
 	</form>

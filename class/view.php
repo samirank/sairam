@@ -44,6 +44,46 @@ class display extends dbconnect {
     }
   }
 
+  // Total number of members
+  function total_members(){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(account_no) AS total FROM members";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
+  // Total number of loans
+  function total_loans(){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(loan_id) AS total FROM loans";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
+  // Total number of agents
+  function total_agents(){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(agent_id) AS total FROM agents";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
+  // Total new notification
+  function total_new_messages(){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(msg_id) AS total FROM messages where status='unread'";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
 
 // End of class 
 }
