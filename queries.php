@@ -37,6 +37,10 @@ $sql = "ALTER TABLE `members` ADD `joining_agent` INT NOT NULL AFTER `relationsh
 $mysqli->query($sql);
 $sql = "ALTER TABLE `members` ADD `current_agent` INT NOT NULL AFTER `joining_agent`, ADD `joining_date` DATE NOT NULL AFTER `current_agent`, ADD `added_on` DATE NOT NULL AFTER `joining_date`, ADD `last_updated_on` DATE NOT NULL AFTER `added_on`, ADD `status` VARCHAR(20) NOT NULL DEFAULT 'active' AFTER `last_updated_on`;";
 $mysqli->query($sql);
+$sql = "ALTER TABLE `members` ADD `added_by` INT NOT NULL AFTER `added_on`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `members` ADD `closing_date` DATE NOT NULL AFTER `joining_date`;";
+$mysqli->query($sql);
 
 // Create agents table
 $sql = "CREATE TABLE `agents` ( `agent_id` INT NOT NULL AUTO_INCREMENT , `agent_name` VARCHAR(50) NOT NULL , `phno` VARCHAR(10) NOT NULL , `address` TEXT NOT NULL , `age` INT NOT NULL , `email` VARCHAR(50) NOT NULL , `status` VARCHAR(10) NOT NULL , PRIMARY KEY (`agent_id`)) ENGINE = InnoDB;";
@@ -49,6 +53,8 @@ $mysqli->query($sql);
 $sql = "ALTER TABLE `agents` CHANGE `status` `status` VARCHAR(10) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'active';";
 $mysqli->query($sql);
 $sql = "ALTER TABLE `agents` ADD UNIQUE(`email`);";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `agents` ADD UNIQUE(`phno`);"
 $mysqli->query($sql);
 
 // Deposit table
@@ -73,6 +79,8 @@ if ($mysqli->query($sql)) {
 	echo "Created loan table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `loans` ADD `loan_amount` INT NOT NULL AFTER `acc_no`;";
+$mysqli->query($sql);
 
 
 // Messages table
@@ -81,6 +89,8 @@ if ($mysqli->query($sql)) {
 	echo "Created messages table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `messages` ADD `to` VARCHAR(10) NOT NULL AFTER `from`;";
+$mysqli->query($sql);
 
 // Closings table
 $sql = "CREATE TABLE `closings` ( `account_no` INT NOT NULL , `date_of_closing` DATE NOT NULL , `amount_returned` INT NOT NULL , `closed_by` INT NOT NULL , PRIMARY KEY (`account_no`)) ENGINE = InnoDB;";
@@ -93,12 +103,19 @@ if ($mysqli->query($sql)) {
 $sql = "CREATE TRIGGER close_account
 AFTER INSERT ON closings
 FOR EACH ROW
-UPDATE members SET members.status="closed"
+UPDATE members SET members.status='closed'
 WHERE members.account_no=NEW.account_no;";
 if ($mysqli->query($sql)) {
 	echo "Created trigger close_account<br>";
 	$flag = 1;
 }
+// Create loan payments table
+$sql = "CREATE TABLE `loan_payments` ( `payment_id` INT NOT NULL AUTO_INCREMENT , `loan_id` INT NOT NULL , `amount` INT NOT NULL , `staff_id` INT NOT NULL , `date_of_payment` DATE NOT NULL , `inserted_on` DATE NOT NULL , PRIMARY KEY (`payment_id`)) ENGINE = InnoDB;";
+if ($mysqli->query($sql)) {
+	echo "Created loan_payments table<br>";
+	$flag = 1;
+}
+
 
 // All query goes above this
 // No changes

@@ -23,11 +23,12 @@
 <body class="fixed-nav sticky-footer" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">Sairam <br> <span>Development Society</span></a>
+    <a class="navbar-brand" href="index.php">Sairam <br> <span>Development Society</span></a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
+      <div class="text-white text-left" id="welcome-text">Welcome, <?php echo $_SESSION['login_user']; ?></div>
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
           <a class="nav-link" href="dashboard.php">
@@ -67,11 +68,30 @@
               </li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="viewmembers.php">
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsemembers" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-user"></i>
-              <span class="nav-link-text">View members</span>
+              <span class="nav-link-text">Members</span>
             </a>
+            <ul class="sidenav-second-level collapse" id="collapsemembers">
+              <li>
+                <a href="addmembership.php">Add members</a>
+              </li>
+              <li>
+                <a href="viewmembers.php">View members</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+            <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsedeposit" data-parent="#exampleAccordion">
+              <i class="fa fa-fw fa-money"></i>
+              <span class="nav-link-text">Deposit</span>
+            </a>
+            <ul class="sidenav-second-level collapse" id="collapsedeposit">
+              <li>
+                <a href="makedeposit.php">Make deposit</a>
+              </li>
+            </ul>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseloan" data-parent="#exampleAccordion">
@@ -127,10 +147,30 @@
               <li>
                 <a href="makedeposit.php">Make deposit</a>
               </li>
-              <!-- <li>
-                <a href="viewmembers.php">View members</a>
-              </li> -->
             </ul>
+            <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
+              <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseloan" data-parent="#exampleAccordion">
+                <i class="fa fa-fw fa-suitcase"></i>
+                <span class="nav-link-text">Loans</span>
+              </a>
+              <ul class="sidenav-second-level collapse" id="collapseloan">
+                <li>
+                  <a href="pay_installment.php">Pay installment</a>
+                </li>
+                <li>
+                  <a href="newloan.php">New loan</a>
+                </li>
+                <li>
+                  <a href="viewloans.php">View loans</a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="messages.php">
+                <i class="fa fa-fw fa-envelope"></i>
+                <span class="nav-link-text">Messages</span>
+              </a>
+            </li>
           </li>
           <!-- Staff menu ends -->  
         <?php endif ?>

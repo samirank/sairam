@@ -27,6 +27,8 @@ if (isset($_POST['add_member'])) {
   $account_no = $_POST['accno'];
   $joining_agent = $_POST['joining_agent'];
   $joining_date = $_POST['joining_date'];
+  $added_by = $_SESSION['login_id'];
+  $closing_date = date('Y-m-d', strtotime("+".$period." months", strtotime($joining_date)));
 
 
   !empty($_FILES['photograph']['name']) ? upload_photo($account_no) : $photo = null;
@@ -36,7 +38,7 @@ if (isset($_POST['add_member'])) {
 
 
   $create = new insert();
-  if(!$create->add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature, $joining_agent, $joining_date)){
+  if(!$create->add_membership($account_no, $member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $occupation, $member_phone, $nominee_name, $nominee_age, $relationship, $photo, $signature, $joining_agent, $joining_date, $closing_date, $added_by)){
     $insert_msg = "Unable to add member please check the data you have entered.";
     $insert_err=1;
   }

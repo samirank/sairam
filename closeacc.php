@@ -5,7 +5,7 @@ $display = new display();
 $cond = "account_no=".$_GET['acc'];
 $result = $display->disp_cond("members",$cond);
 $row = mysqli_fetch_assoc($result);
- ?>
+?>
 <!-- Breadcrumbs -->
 <ol class="breadcrumb">
 	<li class="breadcrumb-item">
@@ -35,16 +35,6 @@ $row = mysqli_fetch_assoc($result);
 		<div class="col"><?php echo $row['account_no']; ?></div>
 	</div>
 	<div class="row p-2">
-		<div class="col">Current balance :</div>
-		<div class="col">
-			<?php 
-			$current_balance = $display->display_current_balance($row['account_no']);
-			$row_cb = mysqli_fetch_assoc($current_balance);
-			echo $row_cb['current_balance'];
-			?>
-		</div>
-	</div>
-	<div class="row p-2 bg-light-gray">
 		<div class="col">Period :</div>
 		<div class="col"><?php echo $row['period']; ?> months</div>
 	</div>
@@ -57,13 +47,13 @@ $row = mysqli_fetch_assoc($result);
 			$interval = date_diff($d1, $d2);
 			echo $interval->format('%m months');
 			?>
-			</div>
+		</div>
 	</div>
 	<div class="row p-2">
 		<div class="col">Installment :</div>
 		<div class="col">Rs. <?php echo $row['instalment']; ?></div>
 	</div>
-	<div class="row p-2">
+	<div class="row p-2 bg-light-gray">
 		<div class="col">Mode :</div>
 		<div class="col"><?php echo $row['mode']; ?></div>
 	</div>
@@ -72,7 +62,7 @@ $row = mysqli_fetch_assoc($result);
 		<div class="col"><?php if($row['rate_of_interest']=="") echo "Not set"; else echo $row['rate_of_interest']."%"; ?></div> 
 		<div class="col"></div>
 	</div>
-	<div class="row p-2">
+	<div class="row p-2 bg-light-gray">
 		<div class="col">Opening date :</div>
 		<div class="col"><?php echo $row['joining_date']; ?></div>
 	</div>
@@ -85,11 +75,36 @@ $row = mysqli_fetch_assoc($result);
 			?>
 		</div>
 	</div>
-	<div class="row p-2">
-		<div class="col">Amount payable</div>
-		<div class="col"></div>
+	<div class="row p-2 bg-light-gray">
+		<div class="col"><b>Current balance</b> :</div>
+		<div class="col">Rs. 
+			<?php 
+			$current_balance = $display->display_current_balance($row['account_no']);
+			$row_cb = mysqli_fetch_assoc($current_balance);
+			echo $row_cb['current_balance'];
+			?>
+		</div>
 	</div>
-</div>
+	<form action="action/closeaccount.php" method="POST">
+		<div class="row p-2">
+			<div class="col"><b>Amount to pay</b> :</div>
+			<div class="col text-left">
+				<div class="input-group mb-2">
+					<div class="input-group-prepend">
+						<div class="input-group-text">Rs.</div>
+					</div>
+					<input name="amount" type="text" class="form-control" id="amountpayable" placeholder="Enter amount" data-validation="required number" data-validation-error-msg="Please enter correct value" autofocus>
+					<input type="hidden" value="<?php echo $row['account_no']; ?>" name="account_no">
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row pt-2">
+		<div class="col-8 offset-md-2">
+			<button type="submit" name="closeacc" class="btn btn-block btn-primary">Close Account</button>
+		</div>
+	</div>
+</form>
 
 
 <?php include('template/foot.php'); ?>

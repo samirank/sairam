@@ -84,6 +84,81 @@ class display extends dbconnect {
     }
   }
 
+  // Display all loans
+  function disp_all_loans(){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT loans.loan_amount,loans.installment,loans.loan_id,loans.acc_no,loans.status,loans.loan_date,members.member_name FROM loans JOIN members ON loans.acc_no=members.account_no WHERE 1";
+    if ($val = $mysqli->query($sql)) return $val;
+    else {
+      echo $mysqli->error;
+    }
+  }
+
+// Get member name from account no
+  function get_member_name($account_no){
+    $mysqli = $this->mysqli;
+    $sql  = "SELECT member_name from members where account_no='$account_no'";
+    $val = $mysqli->query($sql);
+    $val = mysqli_fetch_assoc($val);
+    $val = $val['member_name'];
+    if ($val){
+     return $val;
+   }else {
+    return "Unknown";
+  }
+}
+
+// Get member joining date
+function get_joining_date($account_no){
+  $mysqli = $this->mysqli;
+  $sql  = "SELECT joining_date from members where account_no='$account_no'";
+  $val = $mysqli->query($sql);
+  $val = mysqli_fetch_assoc($val);
+  $val = $val['joining_date'];
+  if ($val){
+   return $val;
+ }else {
+  return false;
+}
+}
+
+// Total loan amount paid
+function total_loan_amt_paid($loan_id){
+  $mysqli = $this->mysqli;
+  $sql = "SELECT SUM(amount) AS 'sum' FROM `loan_payments` WHERE loan_id='$loan_id';";
+  $val = $mysqli->query($sql);
+  $val = mysqli_fetch_assoc($val);
+  $val = $val['sum'];
+  if ($val){
+    return $val;
+  }else {
+    return false;
+  }
+}
+
+// List of list of closing dates of active accounts
+function get_maturity_list(){
+  $mysqli = $this->mysqli;
+  $sql = "SELECT account_no,member_name,closing_date FROM members WHERE status='active';";
+  $val = $mysqli->query($sql);
+  if ($val) {
+    return $val;
+  }else{
+    die($mysqli->error);
+  }
+}
+
+// Get unread messages
+function get_unread_msg($user_id,$role){
+  $mysqli = $this->mysqli;
+  $sql = "SELECT * from messages where status='unread'";
+  $val = $mysqli->query($sql);
+  if ($val) {
+    return $val;
+  }else{
+    die($mysqli->error);
+  } 
+}
 
 // End of class 
 }

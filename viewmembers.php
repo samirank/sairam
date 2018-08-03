@@ -25,6 +25,7 @@ $result = $display->disp_all("members");
 							<th>Installment</th>
 							<th>Mode</th>
 							<th>Period</th>
+							<th>Status</th>
 							<th>Options</th>
 						</tr>
 					</thead>
@@ -38,14 +39,21 @@ $result = $display->disp_all("members");
 								<td><?php echo $row['mode']; ?></td>
 								<td><?php echo $row['period']; ?></td>
 								<td>
+									<div class="<?php if($row['status']=='active') echo 'text-success'; else echo 'text-danger'; ?>">
+										<?php echo $row['status']; ?>
+									</div>
+								</td>
+								<td>
 									<div class="btn-group" role="group">
 										<button id="profileoptions<?php echo $row['user_id']; ?>" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Options
 										</button>
 										<div class="dropdown-menu" aria-labelledby="profileoptions<?php echo $row['user_id']; ?>">
 											<a class="dropdown-item" href="profile.php?mem=<?php echo $row['account_no']; ?>">View</a>
-											<a class="dropdown-item" href="edit_profile.php?mem=<?php echo $row['account_no']; ?>">Edit</a>
-											<a class="dropdown-item"  href="makedeposit.php?acc=<?php echo $row['account_no']; ?>">Deposit</a>
+											<?php if ($row['status']=='active'): ?>
+												<a class="dropdown-item" href="edit.php?mem=<?php echo $row['account_no']; ?>">Edit</a>
+												<a class="dropdown-item"  href="makedeposit.php?acc=<?php echo $row['account_no']; ?>">Deposit</a>
+											<?php endif ?>
 										</div>
 									</div>
 								</td>

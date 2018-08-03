@@ -7,6 +7,19 @@
 	<li class="breadcrumb-item active">New loan</li>
 </ol>
 
+
+<?php if (isset($_SESSION['msg'])): ?>
+	<?php $msg = $_SESSION['msg']; unset($_SESSION['msg']); ?>
+	<!-- Insert message -->
+	<div class='alert alert-<?php if($msg['insert_err']==0){echo "success";}else{echo "danger";} ?> alert-dismissible fade show col-sm-11' role='alert'>
+		<?php echo $msg['insert_msg']; ?>
+		<button type='button' class='close' data-dismiss='alert' aria-label='Close'>
+			<span aria-hidden='true'>&times;</span>
+		</button>
+	</div>
+<?php endif ?>
+
+
 <?php if (!isset($_GET['acc'])): ?>
 	<div class="card card-register mx-auto mt-5 border-primary">
 		<div class="card-header bg-primary-light-2">Enter account number</div>
@@ -97,6 +110,19 @@
 	<form action="action/newloan_action.php" method="POST">
 		<div class="row m-2 p-2">
 			<div class="offset-md-2 col-md-8">
+
+				<!-- Equal loan amount -->
+				<div class="form-group">
+					<div class="form-row">
+						<label for="amount">Enter loan amount</label>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<div class="input-group-text"> Rs.</div>
+							</div>
+							<input name="loan_amt" class="form-control" id="amount" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
+						</div>
+					</div>
+				</div>
 
 				<!-- Equal installment amount -->
 				<div class="form-group">
@@ -200,7 +226,9 @@
 								$res_agents = $display->disp_all("agents"); ?>
 								<option selected disabled>Select</option>
 								<?php while ($row_agents = mysqli_fetch_assoc($res_agents)) { ?>
-									<option value="<?php echo $row_agents['agent_id']; ?>"><?php echo $row_agents['agent_name']; ?> (<?php echo $row_agents['email']; ?>)</option>
+									<?php if ($row_agents['status']=='active'): ?>
+										<option value="<?php echo $row_agents['agent_id']; ?>"><?php echo $row_agents['agent_name']; ?> (<?php echo $row_agents['email']; ?>)</option>
+									<?php endif ?>
 								<?php } ?>
 							</select>
 						</div>

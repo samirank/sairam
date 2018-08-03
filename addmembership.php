@@ -230,25 +230,27 @@
          $res_agents = $display->disp_all("agents"); ?>
          <option selected disabled>Select</option>
          <?php while ($row_agents = mysqli_fetch_assoc($res_agents)) { ?>
-           <option value="<?php echo $row_agents['agent_id']; ?>"><?php echo $row_agents['agent_name']; ?> (<?php echo $row_agents['email']; ?>)</option>
-        <?php } ?>
+           <?php if ($row_agents['status']=='active'): ?>
+             <option value="<?php echo $row_agents['agent_id']; ?>"><?php echo $row_agents['agent_name']; ?> (<?php echo $row_agents['email']; ?>)</option>
+           <?php endif ?>
+         <?php } ?>
        </select>
      </div>
    </div>
  </div>
 
  <!-- joining date -->
-     <div class="form-group">
-      <div class="form-row">
-        <label for="joining_date">Date of joining</label>
-        <div class="input-group">
-         <input type="date" class="form-control" name="joining_date" data-validation="required" data-validation-error-msg="Please select joining date">
-       </div>
-     </div>
+ <div class="form-group">
+  <div class="form-row">
+    <label for="joining_date">Date of joining</label>
+    <div class="input-group">
+     <input type="date" class="form-control" name="joining_date" data-validation="required" data-validation-error-msg="Please select joining date">
    </div>
+ </div>
+</div>
 
- <!-- Photograph -->
- <div class="input-group mb-3">
+<!-- Photograph -->
+<div class="input-group mb-3">
   <div class="input-group-prepend">
     <span class="input-group-text">Photograph</span>
   </div>

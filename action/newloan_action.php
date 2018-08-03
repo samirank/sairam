@@ -16,9 +16,12 @@ if (isset($_POST['new_loan'])) {
 	$loan_date = $_POST['loan_date'];
 	$closing_date = $_POST['closing_date'];
 	$approved_by = $_POST['approved_by'];
+	$loan_amt = $_POST['loan_amt'];
 	$added_by = $_SESSION['login_id'];
 
-	if ($insert->new_loan($acc_no,$installment,$period,$mode,$rate_of_interest,$interest_calculated,$guarantor_name,$security_particulars,$loan_purpose,$loan_date,$closing_date,$approved_by,$added_by)) {
+
+	$loan_id = $insert->new_loan($acc_no,$installment,$period,$mode,$rate_of_interest,$interest_calculated,$guarantor_name,$security_particulars,$loan_purpose,$loan_date,$closing_date,$approved_by,$added_by,$loan_amt);
+	if ($loan_id) {
 		$insert_msg = "Loan added successfully";
 		$insert_err = 0;
 	}else{
@@ -31,6 +34,11 @@ if (isset($_POST['new_loan'])) {
 		'insert_err' => $insert_err,
 	);
 	$_SESSION['msg'] = $msg;
-	header("location: ../profile.php?mem=".$acc_no."&loan=1");
+	if($loan_id){
+		header("location: ../profile.php?mem=".$acc_no."&loan=".$loan_id);
+	}else{
+		header("location: ../newloan.php?acc=".$acc_no);
+		//echo "<script>window.history.back();</script>";
+	}
 }
 ?>

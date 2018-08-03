@@ -1,15 +1,16 @@
 <?php session_start();
 include('../class/update.php');
 $update = new update();
-if (isset($_POST['suspend_account'])) {
-	$user_id = $_POST['user_id'];
+
+if (isset($_POST['deactivate_account'])) {
+	$agent_id = $_POST['agent_id'];
 
 	$insert_err = 1;
 	$insert_msg = "Failed to suspend accouont";
 
-	if ($update->suspend_account($user_id)=="active") {
+	if ($update->deactivate_account($agent_id)=="active") {
 		$insert_err = 0;
-		$insert_msg = "Account suspended";
+		$insert_msg = "Account deactivated";
 	}else {
 		$insert_err = 0;
 		$insert_msg = "Account activated";
@@ -19,6 +20,7 @@ if (isset($_POST['suspend_account'])) {
 		'insert_err' => $insert_err
 	);
 	$_SESSION['msg'] = $msg;
-	header("location:../profile.php?staff=".$user_id);
+	header("location:../profile.php?agent=".$agent_id);
 }
+
 ?>

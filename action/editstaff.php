@@ -26,5 +26,4 @@ if (isset($_POST['edit_staff'])) {
 	header("location: ../edit.php?staff=".$user_id);
 
 }
-print_r($_POST);
 ?>

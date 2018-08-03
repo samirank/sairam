@@ -43,7 +43,7 @@
         <div class="form-row">
           <div class="col-md-6">
             <label for="exampleInputPassword1">Password</label>
-            <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password" data-validation="strength" data-validation-strength="1">
+            <input name="password" class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">
           </div>
           <div class="col-md-6">
             <label for="exampleConfirmPassword">Confirm password</label>

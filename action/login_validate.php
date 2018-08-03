@@ -8,23 +8,25 @@ if (isset($_POST['login'])) {
   $pswd     = md5($pswd);
 
   $validate = new validate();
-  if ($validate->validate_login($user, $pswd)) {
-    $_SESSION['login_user'] = $user;
-    
-    $display = new display();
-    $result=$display->disp_cond("users","user_name='{$user}'");
-    $row=mysqli_fetch_assoc($result);
-    $_SESSION['login_id'] = $row['user_id'];
-    $_SESSION['login_role'] = $row['user_role'];
-    header("location: ../dashboard.php");
+  $status = $validate->validate_login($user, $pswd);
+  if ($status!==false) {
+    if ($status=='active') {
+      $_SESSION['login_user'] = $user;
+
+      $display = new display();
+      $result=$display->disp_cond("users","user_name='{$user}'");
+      $row=mysqli_fetch_assoc($result);
+      $_SESSION['login_id'] = $row['user_id'];
+      $_SESSION['login_role'] = $row['user_role'];
+      header("location: ../dashboard.php");
+    }else{
+      $_SESSION['msg'] = "Account suspended. Please contact Admin";
+      header("location: ../index.php");
+    }
   }
   else {
     $_SESSION['msg'] = "Incorrect username/password";
     header("location: ../index.php");
   }
-}
-else{
-  $_SESSION['msg'] = "Incorrect username/password";
-  header("location: ../index.php");
 }
 ?>
