@@ -18,9 +18,9 @@ class update extends dbconnect {
 	}
 
 	// Update member photo
-	function change_member_photo($account_no,$photo){
+	function change_member_photo($mem_id,$photo){
 		$mysqli = $this->mysqli;
-		$sql = "UPDATE members SET photo='$photo' WHERE account_no='$account_no'";
+		$sql = "UPDATE members SET photo='$photo' WHERE mem_id='$mem_id'";
 		if($mysqli->query($sql)){
 			return true;
 		}else{
@@ -29,9 +29,9 @@ class update extends dbconnect {
 	}
 
 	// Upload signature
-	function change_member_signature($account_no,$signature){
+	function change_member_signature($mem_id,$signature){
 		$mysqli = $this->mysqli;
-		$sql = "UPDATE members SET signature='$signature' WHERE account_no='$account_no'";
+		$sql = "UPDATE members SET signature='$signature' WHERE mem_id='$mem_id'";
 		if($mysqli->query($sql)){
 			return true;
 		}else{
@@ -118,14 +118,14 @@ class update extends dbconnect {
 
 
 	// Update member profile
-	function edit_member($member_name, $member_age, $father_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $instalment, $mode, $period, $member_phone, $nominee_name, $nominee_age, $relationship, $current_agent, $edit_member, $account_no, $closing_date) {
+	function edit_member($member_name, $member_age, $f_h_name, $present_address, $present_pincode, $permanent_address, $permanent_pincode, $occupation, $member_phone, $current_agent, $mem_id) {
 		$mysqli = $this->mysqli;
-		$sql = "UPDATE `members` SET `member_name`='$member_name',`member_age`='$member_age',`father_name`='$father_name',`present_address`='$present_address',`present_pincode`='$present_pincode',`permanent_address`='$permanent_address',`permanent_pincode`='$permanent_pincode',`instalment`='$instalment',`mode`='$mode',`period`='$period',`member_phone`='$member_phone',`nominee_name`='$nominee_name',`nominee_age`='$nominee_age',`relationship`='$relationship',`current_agent`='$current_agent',`last_updated_on`=now(),`closing_date`='$closing_date' WHERE account_no='$account_no'";
+		$sql = "UPDATE `members` SET `member_name`='$member_name',`member_age`='$member_age',`f_h_name`='$f_h_name',`present_address`='$present_address',`present_pincode`='$present_pincode',`occupation`='$occupation',`permanent_address`='$permanent_address',`permanent_pincode`='$permanent_pincode',`member_phone`='$member_phone',`current_agent`='$current_agent',`last_updated_on`=now() WHERE mem_id='$mem_id'";
 
 		if($mysqli->query($sql)){
 			return true;
 		}else{
-			// echo $mysqli->error;
+			// die($mysqli->error);
 			return false;
 		}
 	}
@@ -143,10 +143,10 @@ class update extends dbconnect {
 		}
 	}
 
-	// Close loan
-	function close_loan($loan_id){
+	// Edit deposit account
+	function edit_acc($account_no, $installment, $mode, $period, $nominee_name, $nominee_age, $relationship, $joining_date, $acc_id, $mem_id, $rate_of_interest){
 		$mysqli = $this->mysqli;
-		$sql = "UPDATE loans SET status='closed',closing_date=now(),last_updated_on=now() WHERE loan_id='$loan_id';";
+		$sql = "UPDATE `deposit_accounts` SET `account_no`='$account_no',`installment`='$installment',`mode`='$mode',`period`='$period',`nominee_name`='$nominee_name',`nominee_age`='$nominee_age',`nominee_relation`='$relationship',`joining_date`='$joining_date',`last_updated`=now(),`rate_of_interest`='$rate_of_interest' WHERE acc_id='$acc_id';";
 		if($mysqli->query($sql)){
 			return true;
 		}else{
@@ -155,17 +155,84 @@ class update extends dbconnect {
 		}
 	}
 
-	// Update message as read
-	function mark_as_read($msg_id){
+	// Edit loan
+	function edit_loan($loan_no, $loan_amt, $rate_of_interest, $interest_calculated, $interest, $installment, $period, $mode, $guarantor_name, $security_particulars, $loan_purpose, $loan_date, $closing_date, $mem_id, $loan_id){
 		$mysqli = $this->mysqli;
-		$sql = "UPDATE messages SET status='read' WHERE msg_id='$msg_id';";
+		$sql = "UPDATE `loans` SET `loan_no`='$loan_no',`loan_amount`='$loan_amt',`installment`='$installment',`period`='$period',`mode`='$mode',`rate_of_interest`='$rate_of_interest',`interest_amount`='$interest',`interest_calculated`='$interest_calculated',`guarantor_name`='$guarantor_name',`security_particulars`='$security_particulars',`loan_purpose`='$loan_purpose',`loan_date`='$loan_date',`closing_date`='$closing_date',`last_updated_on`=now() WHERE loan_id='$loan_id';";
 		if($mysqli->query($sql)){
 			return true;
 		}else{
-			echo $mysqli->error;
-			// return false;
+			// echo $mysqli->error;
+			return false;
 		}
 	}
+
+	// Close loan
+	function close_loan($loan_id){
+		$mysqli = $this->mysqli;
+		$sql = "UPDATE loans SET status='closed',last_updated_on=now() WHERE loan_id='$loan_id';";
+		if($mysqli->query($sql)){
+			return true;
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}
+	}
+
+	// Close account
+	function close_account_status($acc_id){
+		$mysqli = $this->mysqli;
+		$sql = "UPDATE deposit_accounts SET status='closed' WHERE acc_id='$acc_id'";
+		if($mysqli->query($sql)){
+			return true;
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}
+	}
+
+	// Refresh member status
+	function refresh_member_status($mem_id){
+		$mysqli = $this->mysqli;
+		$active_accounts = mysqli_num_rows($mysqli->query("SELECT acc_id FROM deposit_accounts WHERE mem_id='$mem_id' AND status='active'"));
+		$active_loans = mysqli_num_rows($mysqli->query("SELECT loan_id FROM loans WHERE mem_id='$mem_id' AND status='active'"));
+		if (($active_accounts==0)&&($active_loans==0)) {
+			$sql = "UPDATE members SET status='inactive' WHERE mem_id='$mem_id'";
+			if($mysqli->query($sql)){
+				return true;
+			}else{
+			// echo $mysqli->error;
+				return false;
+			}
+		}else{
+			$sql = "UPDATE members SET status='active' WHERE mem_id='$mem_id'";
+			if($mysqli->query($sql)){
+				return true;
+			}else{
+			// echo $mysqli->error;
+				return false;
+			}
+		}
+	}
+
+	// Reopen acc
+	function reopen_acc($acc_id){
+		$mysqli = $this->mysqli;
+		$sql = "DELETE FROM `closings` WHERE `acc_id` = '$acc_id'";
+		if ($mysqli->query($sql)) {
+			$sql = "UPDATE deposit_accounts SET status='active' WHERE acc_id='$acc_id'";
+			if ($mysqli->query($sql)){
+				return true;
+			}else{
+			// echo $mysqli->error;
+				return false;
+			}
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}
+	}
+
 
 // End of class
 }

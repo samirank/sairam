@@ -19,12 +19,8 @@ $result = $display->disp_all("members");
 				<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
 					<thead>
 						<tr>
-							<th>Account No.</th>
 							<th>Name</th>
 							<th>Phone No.</th>
-							<th>Installment</th>
-							<th>Mode</th>
-							<th>Period</th>
 							<th>Status</th>
 							<th>Options</th>
 						</tr>
@@ -32,12 +28,8 @@ $result = $display->disp_all("members");
 					<tbody>
 						<?php while($row=mysqli_fetch_assoc($result)){ ?>
 							<tr>
-								<td><?php echo $row['account_no']; ?></td>
 								<td><?php echo $row['member_name']; ?></td>
 								<td><?php echo $row['member_phone']; ?></td>
-								<td><?php echo $row['instalment']; ?></td>
-								<td><?php echo $row['mode']; ?></td>
-								<td><?php echo $row['period']; ?></td>
 								<td>
 									<div class="<?php if($row['status']=='active') echo 'text-success'; else echo 'text-danger'; ?>">
 										<?php echo $row['status']; ?>
@@ -45,14 +37,13 @@ $result = $display->disp_all("members");
 								</td>
 								<td>
 									<div class="btn-group" role="group">
-										<button id="profileoptions<?php echo $row['user_id']; ?>" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										<button id="profileoptions<?php echo $row['mem_id']; ?>" type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 											Options
 										</button>
-										<div class="dropdown-menu" aria-labelledby="profileoptions<?php echo $row['user_id']; ?>">
-											<a class="dropdown-item" href="profile.php?mem=<?php echo $row['account_no']; ?>">View</a>
+										<div class="dropdown-menu" aria-labelledby="profileoptions<?php echo $row['mem_id']; ?>">
+											<a class="dropdown-item" href="profile.php?mem=<?php echo $row['mem_id']; ?>">View</a>
 											<?php if ($row['status']=='active'): ?>
-												<a class="dropdown-item" href="edit.php?mem=<?php echo $row['account_no']; ?>">Edit</a>
-												<a class="dropdown-item"  href="makedeposit.php?acc=<?php echo $row['account_no']; ?>">Deposit</a>
+												<a class="dropdown-item" href="edit.php?mem=<?php echo $row['mem_id']; ?>">Edit</a>
 											<?php endif ?>
 										</div>
 									</div>

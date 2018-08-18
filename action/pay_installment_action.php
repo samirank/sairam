@@ -1,21 +1,29 @@
 <?php
 session_start();
 include('../class/insert.php');
+include('../class/validate.php');
+$validate = new validate();
 $insert = new insert();
 if (isset($_POST['pay_installment'])) {
 	print_r($_POST);
 	$amount = $_POST['amount'];
 	$date = $_POST['date'];
+	$date = date('Y-m-d', strtotime($date));
 	$loan_id = $_POST['loan_id'];
-	$account_no = $_POST['account_no'];
+	$mem_id = $_POST['mem_id'];
 	$staff_id = $_SESSION['login_id'];
 
 	$insert_err = 1;
 	$insert_msg = "Failed to pay installment. Please contact admin.";
 
-	if ($insert->new_payment($loan_id,$amount,$staff_id,$date)) {
-		$insert_err = 0;
-		$insert_msg = "Installment paid successfully.";
+	if (!$validate->same_day_installment($date,$loan_id)) {
+		if ($insert->new_payment($loan_id,$amount,$staff_id,$date)) {
+			$insert_err = 0;
+			$insert_msg = "Installment paid successfully.";
+		}
+	}else{
+		$insert_msg = "Payment failed. Same date payment not allowed.";
+		$insert_err = 1;
 	}
 
 
@@ -25,6 +33,6 @@ if (isset($_POST['pay_installment'])) {
 	);
 
 	$_SESSION['msg'] = $msg;
-	header("location:../profile.php?mem=".$account_no."&loan=".$loan_id);
+	header("location:../profile.php?mem=".$mem_id."&loan=".$loan_id);
 }
 ?>

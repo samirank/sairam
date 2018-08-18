@@ -1,4 +1,7 @@
 <?php include('template/head.php'); ?>
+<?php include('class/view.php');
+$display = new display();
+?>
 
 <ol class="breadcrumb">
 	<li class="breadcrumb-item">
@@ -8,43 +11,49 @@
 </ol>
 
 <?php if ((!isset($_GET['acc']))&&(!isset($_GET['loan']))): ?>
-<div class="card card-register mx-auto mt-5 border-primary">
-	<div class="card-body">
-		<form action="pay_installment.php" method="GET">
-			<div class="form-group">
-				<label for="inputAccno">Search by account number.</label>
-				<div class="input-group mb-3">
-					<input name="acc" class="form-control" id="inputAccno" type="text" aria-describedby="nameHelp" placeholder="Enter account number" data-validation="number server" data-validation-param-name="loan_account" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower">
-					<div class="input-group-append">
-						<button type="submit" class="btn btn-primary"> Submit </button>
-					</div>
-				</div>
-			</div>
-		</form>
+<?php $result=$display->disp_all_loans("loans"); ?>
+<div class="card">
+	<div class="card-header">
+		<i class="fa fa-list"></i> Loans
 	</div>
-</div>
-<div class="card card-register mx-auto mt-5 border-primary">
 	<div class="card-body">
-		<form action="pay_installment.php" method="GET">
-			<div class="form-group">
-				<label for="inputLoanID">Search by loan id.</label>
-				<div class="input-group mb-3">
-					<input name="loan" class="form-control" id="inputLoanID" type="text" aria-describedby="nameHelp" placeholder="Enter loan id" data-validation="number server" data-validation-param-name="check_loan" data-validation-url="action/form_validate.php"  data-validation-allowing="_" data-sanitize="trim lower">
-					<div class="input-group-append">
-						<button type="submit" class="btn btn-primary"> Submit </button>
-					</div>
-				</div>
-			</div>
-		</form>	
+		<div class="table-responsive">
+			<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+				<thead>
+					<tr>
+						<th>Member name</th>
+						<th>Loan No</th>
+						<th>Total Amount</th>
+						<th>Installment</th>
+						<th>Loan date</th>
+						<th></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php while($row=mysqli_fetch_assoc($result)){ ?>
+						<?php if ($row['status']=='active'): ?>
+							<tr>
+								<td><?php echo $row['member_name']; ?></td>
+								<td><?php echo $row['loan_no']; ?></td>
+								<td>Rs. <?php echo ($row['loan_amount']+$row['interest_amount']); ?></td>
+								<td>Rs. <?php echo $row['installment']; ?></td>
+								<td><?php echo $display->date_dmy($row['loan_date']); ?></td>
+								<td class="text-right" style="width: 90px;">
+									<a class="btn btn-sm btn-primary" href="pay_installment.php?loan=<?php echo $row['loan_id']; ?>">Pay Installment</a>
+								</td>
+							</tr>
+						<?php endif ?>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 <?php endif ?>
 
 <?php if (isset($_GET['acc'])&&(!isset($_GET['loan']))): ?>
 <?php
-include('class/view.php');
 include('class/validate.php');
-$display = new display();
 $validate = new validate();
 ?>
 <?php if ($validate->validate_accno($_GET['acc'])): ?>
@@ -103,7 +112,6 @@ $validate = new validate();
 
 	<?php if (isset($_GET['loan'])): ?>
 		<?php 
-		include('class/view.php');
 		include('class/validate.php');
 		$display = new display();
 		$validate = new validate();
@@ -118,19 +126,23 @@ $validate = new validate();
 			<div class="offset-md-2 col-md-8 text-left border rounded mt-3">
 				<div class="row p-2 bg-light-gray">
 					<div class="col">Member name :</div>
-					<div class="col"><?php echo $display->get_member_name($row['acc_no']); ?></div>
+					<div class="col"><?php echo $display->get_member_name($row['mem_id']); ?></div>
 				</div>
 				<div class="row p-2">
-					<div class="col">Loan id :</div>
-					<div class="col"><b><?php echo $row['loan_id']; ?></b></div>
-				</div>
-				<div class="row p-2 bg-light-gray">
-					<div class="col">Account number :</div>
-					<div class="col"><b><?php echo $row['acc_no']; ?></b></div>
+					<div class="col">Loan no. :</div>
+					<div class="col"><b><?php echo $row['loan_no']; ?></b></div>
 				</div>
 				<div class="row p-2">
 					<div class="col">Loan amount :</div>
 					<div class="col">Rs. <?php echo $row['loan_amount']; ?></div>
+				</div>
+				<div class="row p-2">
+					<div class="col">Interest amount :</div>
+					<div class="col">Rs. <?php echo $row['interest_amount']; ?></div>
+				</div>
+				<div class="row p-2">
+					<div class="col">Total loan amount :</div>
+					<div class="col">Rs. <?php echo ($row['interest_amount']+$row['loan_amount']); ?></div>
 				</div>
 				<div class="row p-2 bg-light-gray">
 					<div class="col">Installment :</div>
@@ -171,11 +183,11 @@ $validate = new validate();
 					<div class="row p-2">
 						<div class="col">Date of payment :</div>
 						<div class="col">
-							<input type="date" name="date" class="form-control" data-validation="required">
+							<input class="form-control datepicker" name="date" data-validation="date" data-validation-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
 						</div>
 					</div>
 					<input type="hidden" name="loan_id" value="<?php echo $row['loan_id']; ?>">
-					<input type="hidden" name="account_no" value="<?php echo $row['acc_no']; ?>">
+					<input type="hidden" name="mem_id" value="<?php echo $row['mem_id']; ?>">
 					<button type="submit" name="pay_installment" class="btn btn-primary btn-block">Confirm Payment</button>
 				</form>
 			</div>

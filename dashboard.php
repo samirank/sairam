@@ -4,7 +4,7 @@ $display = new display();
 $total_mem = $display->total_members();
 $total_loans = $display->total_loans();
 $total_agents = $display->total_agents();
-$new_messages = $display->total_new_messages();
+$new_messages = $display->total_new_messages($_SESSION['login_id'],$_SESSION['login_role']);
  ?>
       <!-- Breadcrumbs-->
       <ol class="breadcrumb">
@@ -67,7 +67,7 @@ $new_messages = $display->total_new_messages();
               </div>
               <div class="mr-5"><?php echo $new_messages; ?> New Messages!</div>
             </div>
-            <a class="card-footer text-white clearfix small z-1" href="#">
+            <a class="card-footer text-white clearfix small z-1" href="messages.php">
               <span class="float-left">View Details</span>
               <span class="float-right">
                 <i class="fa fa-angle-right"></i>

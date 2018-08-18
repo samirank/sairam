@@ -2,6 +2,43 @@
 <?php if(isset($_SESSION['login_id'])){
 	header('location: dashboard.php');
 } ?>
+<?php 
+if (isset($_POST['login'])) {
+  include ('class/validate.php');
+  include ('class/view.php');
+  $user     = $_POST['username'];
+  $pswd     = $_POST['enc'];
+  $pswd     = md5($pswd);
+
+  $validate = new validate();
+  $status = $validate->validate_login($user, $pswd);
+  if ($status!==false) {
+    if ($status=='active') {
+      $_SESSION['login_user'] = $user;
+
+      $display = new display();
+      $result=$display->disp_cond("users","user_name='{$user}'");
+      $row=mysqli_fetch_assoc($result);
+      $_SESSION['login_id'] = $row['user_id'];
+      $_SESSION['login_role'] = $row['user_role'];
+      if (isset($_SESSION['redirect_url'])) {
+        $url = $_SESSION['redirect_url'];
+        unset($_SESSION['redirect_url']);
+        header("location: ..".$url);
+      }else{
+        header("location:dashboard.php");
+      }
+    }else{
+      $_SESSION['msg'] = "Account suspended. Please contact Admin";
+      header("location:index.php");
+    }
+  }
+  else {
+    $_SESSION['msg'] = "Incorrect username/password";
+    header("location:index.php");
+  }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +55,10 @@
 			<div id="login-header">
 				<h2>Sign in</h2>
 			</div>
-			<form action="action/login_validate.php" method="POST">
+			<form action="<?php echo htmlentities($_SERVER['PHP_SELF']); ?>" method="POST">
 				<div class="form-group">
 					<label for="username">Username</label>
-					<input type="text" class="form-control" name=username id="username" placeholder="Enter email">
+					<input type="text" class="form-control" name=username id="username" placeholder="Enter email" autofocus>
 					<small id="emailHelp" class="form-text text-muted">Please enter your username.</small>
 				</div>
 				<div class="form-group">

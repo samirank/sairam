@@ -2,8 +2,8 @@
 <?php include('class/view.php'); ?>
 <?php 
 $display = new display();
-$cond = "account_no=".$_GET['acc'];
-$result = $display->disp_cond("members",$cond);
+$cond = "acc_id='".$_GET['acc']."'";
+$result = $display->disp_cond("deposit_accounts",$cond);
 $row = mysqli_fetch_assoc($result);
 ?>
 <!-- Breadcrumbs -->
@@ -28,7 +28,7 @@ $row = mysqli_fetch_assoc($result);
 	</div>
 	<div class="row p-2">
 		<div class="col">Name :</div>
-		<div class="col"><?php echo $row['member_name']; ?></div>
+		<div class="col"><?php echo $display->get_member_name($row['mem_id']); ?></div>
 	</div>
 	<div class="row p-2 bg-light-gray">
 		<div class="col">Account number :</div>
@@ -51,7 +51,7 @@ $row = mysqli_fetch_assoc($result);
 	</div>
 	<div class="row p-2">
 		<div class="col">Installment :</div>
-		<div class="col">Rs. <?php echo $row['instalment']; ?></div>
+		<div class="col">Rs. <?php echo $row['installment']; ?></div>
 	</div>
 	<div class="row p-2 bg-light-gray">
 		<div class="col">Mode :</div>
@@ -64,14 +64,14 @@ $row = mysqli_fetch_assoc($result);
 	</div>
 	<div class="row p-2 bg-light-gray">
 		<div class="col">Opening date :</div>
-		<div class="col"><?php echo $row['joining_date']; ?></div>
+		<div class="col"><?php echo $display->date_dmy( $row['joining_date']); ?></div>
 	</div>
 	<div class="row p-2">
 		<div class="col">Closing date :</div>
 		<div class="col">
 			<?php
-			$closing_date = date('Y-m-d', time());
-			echo $closing_date;
+			$closing_date = date('Y-m-d');
+			echo $display->date_dmy($closing_date);
 			?>
 		</div>
 	</div>
@@ -79,7 +79,7 @@ $row = mysqli_fetch_assoc($result);
 		<div class="col"><b>Current balance</b> :</div>
 		<div class="col">Rs. 
 			<?php 
-			$current_balance = $display->display_current_balance($row['account_no']);
+			$current_balance = $display->display_current_balance($row['acc_id']);
 			$row_cb = mysqli_fetch_assoc($current_balance);
 			echo $row_cb['current_balance'];
 			?>
@@ -94,13 +94,17 @@ $row = mysqli_fetch_assoc($result);
 						<div class="input-group-text">Rs.</div>
 					</div>
 					<input name="amount" type="text" class="form-control" id="amountpayable" placeholder="Enter amount" data-validation="required number" data-validation-error-msg="Please enter correct value" autofocus>
-					<input type="hidden" value="<?php echo $row['account_no']; ?>" name="account_no">
+					<input type="hidden" value="<?php echo $row['acc_id']; ?>" name="acc_id">
 				</div>
 			</div>
 		</div>
 	</div>
 	<div class="row pt-2">
 		<div class="col-8 offset-md-2">
+			<input type="hidden" name="acc_id" value="<?php echo $row['acc_id']; ?>">
+			<input type="hidden" name="account_no" value="<?php echo $row['account_no']; ?>">
+			<input type="hidden" name="mem_id" value="<?php echo $row['mem_id']; ?>">
+			<input type="hidden" name="member_name" value="<?php echo $display->get_member_name($row['mem_id']); ?>">
 			<button type="submit" name="closeacc" class="btn btn-block btn-primary">Close Account</button>
 		</div>
 	</div>

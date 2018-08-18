@@ -41,6 +41,7 @@
 <!-- Custom scripts for all pages-->
 <script src="assets/js/sb-admin.min.js"></script>
 <script src="assets/js/jquery.form-validator.min.js"></script>
+<script src="assets/vendor/jquery-ui/jquery-ui.min.js"></script>
 <!-- Custom scripts for this page-->
 <script src="assets/js/sb-admin-datatables.min.js"></script>
 <script>
@@ -52,6 +53,11 @@
    // $.validate(); call function here or in the page where it is used
 
  });
+
+  $( ".datepicker" ).datepicker({
+    inline: true,
+    dateFormat: "dd-mm-yy"
+  });
 </script>
 <?php echo $script; ?>
 </div>

@@ -28,19 +28,43 @@ if ($mysqli->query($sql)) {
 }
 
 // Create members table
-$sql ="CREATE TABLE `members` (`account_no` varchar(50) NOT NULL, `member_name` varchar(50) NOT NULL, `member_age` int(50) NOT NULL, `father_name` varchar(50) NOT NULL, `present_address` text NOT NULL, `present_pincode` varchar(10) NOT NULL, `permanent_address` text NOT NULL, `permanent_pincode` varchar(10) NOT NULL, `instalment` varchar(100) NOT NULL, `mode` varchar(50) NOT NULL, `period` varchar(50) NOT NULL, `occupation` varchar(20) NOT NULL, `member_phone` VARCHAR(12) NOT NULL, `nominee_name` varchar(50) NOT NULL, `nominee_age` int(50) NOT NULL, `relationship` varchar(50) NOT NULL, `photo` varchar(50) NULL, `signature` varchar(50) NULL, PRIMARY KEY (`account_no`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
+$sql ="CREATE TABLE `members` (
+  `mem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_name` varchar(50) NOT NULL,
+  `member_age` int(50) NOT NULL,
+  `f_h_name` varchar(50) NOT NULL,
+  `present_address` text NOT NULL,
+  `present_pincode` varchar(10) NOT NULL,
+  `permanent_address` text NOT NULL,
+  `permanent_pincode` varchar(10) NOT NULL,
+  `occupation` varchar(20) NOT NULL,
+  `member_phone` varchar(12) NOT NULL,
+  `joining_agent` int(11) NOT NULL,
+  `current_agent` int(11) NOT NULL,
+  `added_on` date NOT NULL,
+  `added_by` int(11) NOT NULL,
+  `last_updated_on` date NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'active',
+  `photo` varchar(50) DEFAULT NULL,
+  `signature` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`mem_id`)) ENGINE=InnoDB DEFAULT CHARSET=latin1;";
 if ($mysqli->query($sql)) {
 	echo "Created members table<br>";
 	$flag = 1;
 }
-$sql = "ALTER TABLE `members` ADD `joining_agent` INT NOT NULL AFTER `relationship`;";
+$sql = "ALTER TABLE `members` ADD UNIQUE(`member_phone`);";
 $mysqli->query($sql);
-$sql = "ALTER TABLE `members` ADD `current_agent` INT NOT NULL AFTER `joining_agent`, ADD `joining_date` DATE NOT NULL AFTER `current_agent`, ADD `added_on` DATE NOT NULL AFTER `joining_date`, ADD `last_updated_on` DATE NOT NULL AFTER `added_on`, ADD `status` VARCHAR(20) NOT NULL DEFAULT 'active' AFTER `last_updated_on`;";
+
+
+// Create table deposit_accouonts
+$sql = "CREATE TABLE `deposit_accounts` ( `acc_id` INT(11) NOT NULL AUTO_INCREMENT , `account_no` VARCHAR(20) NOT NULL , `mem_id` INT NOT NULL , `installment` INT NOT NULL , `mode` VARCHAR(10) NOT NULL , `period` INT NOT NULL , `nominee_name` VARCHAR(50) NOT NULL , `nominee_age` INT NOT NULL , `nominee_relation` VARCHAR(20) NOT NULL , `joining_date` DATE NOT NULL , `joining_agent` INT NOT NULL , `added_on` DATE NOT NULL , `added_by` INT NOT NULL , `last_updated` DATE NOT NULL , `status` VARCHAR(20) NOT NULL , PRIMARY KEY (`acc_id`)) ENGINE = InnoDB;";
+if ($mysqli->query($sql)) {
+	echo "Created deposit_accounts table<br>";
+	$flag = 1;
+}
+$sql = "ALTER TABLE `deposit_accounts` ADD UNIQUE(`account_no`);";
 $mysqli->query($sql);
-$sql = "ALTER TABLE `members` ADD `added_by` INT NOT NULL AFTER `added_on`;";
-$mysqli->query($sql);
-$sql = "ALTER TABLE `members` ADD `closing_date` DATE NOT NULL AFTER `joining_date`;";
-$mysqli->query($sql);
+
 
 // Create agents table
 $sql = "CREATE TABLE `agents` ( `agent_id` INT NOT NULL AUTO_INCREMENT , `agent_name` VARCHAR(50) NOT NULL , `phno` VARCHAR(10) NOT NULL , `address` TEXT NOT NULL , `age` INT NOT NULL , `email` VARCHAR(50) NOT NULL , `status` VARCHAR(10) NOT NULL , PRIMARY KEY (`agent_id`)) ENGINE = InnoDB;";
@@ -54,7 +78,7 @@ $sql = "ALTER TABLE `agents` CHANGE `status` `status` VARCHAR(10) CHARACTER SET 
 $mysqli->query($sql);
 $sql = "ALTER TABLE `agents` ADD UNIQUE(`email`);";
 $mysqli->query($sql);
-$sql = "ALTER TABLE `agents` ADD UNIQUE(`phno`);"
+$sql = "ALTER TABLE `agents` ADD UNIQUE(`phno`);";
 $mysqli->query($sql);
 
 // Deposit table
@@ -69,7 +93,9 @@ $sql = "ALTER TABLE `deposit` CHANGE `account_id` `account_no` INT(11) NOT NULL;
 $mysqli->query($sql);
 $sql = "ALTER TABLE `deposit` ADD `inserted_on` DATE NOT NULL AFTER `date_of_payment`;";
 $mysqli->query($sql);
-$sql = "ALTER TABLE `members` ADD `rate_of_interest` FLOAT(2) NULL AFTER `last_updated_on`;";
+$sql = "ALTER TABLE `deposit_accounts` ADD `rate_of_interest` FLOAT(2) NULL AFTER `last_updated`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `deposit` CHANGE `account_no` `acc_id` INT(11) NOT NULL;";
 $mysqli->query($sql);
 
 
@@ -81,10 +107,19 @@ if ($mysqli->query($sql)) {
 }
 $sql = "ALTER TABLE `loans` ADD `loan_amount` INT NOT NULL AFTER `acc_no`;";
 $mysqli->query($sql);
-
+$sql = "ALTER TABLE `loans` ADD `loan_no` VARCHAR(20) NOT NULL AFTER `loan_id`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `loans` CHANGE `acc_no` `mem_id` INT(11) NOT NULL;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `loans` ADD UNIQUE(`loan_no`);";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `loans` ADD `interest_amount` INT NOT NULL AFTER `rate_of_interest`;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `loans` DROP `approved_by`;";
+$mysqli->query($sql);
 
 // Messages table
-$sql = "CREATE TABLE `messages` ( `msg_id` INT NOT NULL AUTO_INCREMENT , `date` DATE NOT NULL , `time` TIME NOT NULL , `from` VARCHAR(50) NOT NULL , `sub` TEXT NOT NULL , `msg` TEXT NOT NULL , `status` VARCHAR(10) NOT NULL DEFAULT 'unread' , PRIMARY KEY (`msg_id`)) ENGINE = InnoDB;";
+$sql = "CREATE TABLE `messages` ( `msg_id` INT NOT NULL AUTO_INCREMENT , `date` DATE NOT NULL , `time` TIME NOT NULL , `from` VARCHAR(50) NOT NULL , `sub` TEXT NOT NULL , `msg` TEXT NOT NULL , PRIMARY KEY (`msg_id`)) ENGINE = InnoDB;";
 if ($mysqli->query($sql)) {
 	echo "Created messages table<br>";
 	$flag = 1;
@@ -92,23 +127,40 @@ if ($mysqli->query($sql)) {
 $sql = "ALTER TABLE `messages` ADD `to` VARCHAR(10) NOT NULL AFTER `from`;";
 $mysqli->query($sql);
 
+// Message status table
+$sql = "CREATE TABLE `msg_status` ( `msg_id` INT NOT NULL , `user_id` INT NOT NULL ) ENGINE = InnoDB;";
+if ($mysqli->query($sql)) {
+	echo "Created message status table<br>";
+	$flag = 1;
+}
+
 // Closings table
 $sql = "CREATE TABLE `closings` ( `account_no` INT NOT NULL , `date_of_closing` DATE NOT NULL , `amount_returned` INT NOT NULL , `closed_by` INT NOT NULL , PRIMARY KEY (`account_no`)) ENGINE = InnoDB;";
 if ($mysqli->query($sql)) {
 	echo "Created closings table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `closings` CHANGE `account_no` `account_no` VARCHAR(20) NOT NULL;";
+$mysqli->query($sql);
+$sql = "ALTER TABLE `closings` CHANGE `account_no` `acc_id` INT(20) NOT NULL;";
+$mysqli->query($sql);
 
-// Create CLose trigger
-$sql = "CREATE TRIGGER close_account
-AFTER INSERT ON closings
-FOR EACH ROW
-UPDATE members SET members.status='closed'
-WHERE members.account_no=NEW.account_no;";
+// Loan closing table
+$sql = "CREATE TABLE `loan_closings` ( `loan_id` INT NOT NULL , `date_of_closing` DATE NOT NULL , `closed_by` INT NOT NULL ) ENGINE = InnoDB;";
 if ($mysqli->query($sql)) {
-	echo "Created trigger close_account<br>";
+	echo "Created loan closings table<br>";
 	$flag = 1;
 }
+// Create CLose trigger
+// $sql = "CREATE TRIGGER close_account
+// AFTER INSERT ON closings
+// FOR EACH ROW
+// UPDATE members SET members.status='closed'
+// WHERE members.account_no=NEW.account_no;";
+// if ($mysqli->query($sql)) {
+// 	echo "Created trigger close_account<br>";
+// 	$flag = 1;
+// }
 // Create loan payments table
 $sql = "CREATE TABLE `loan_payments` ( `payment_id` INT NOT NULL AUTO_INCREMENT , `loan_id` INT NOT NULL , `amount` INT NOT NULL , `staff_id` INT NOT NULL , `date_of_payment` DATE NOT NULL , `inserted_on` DATE NOT NULL , PRIMARY KEY (`payment_id`)) ENGINE = InnoDB;";
 if ($mysqli->query($sql)) {

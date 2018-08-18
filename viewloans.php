@@ -22,7 +22,7 @@ $result=$display->disp_all_loans("loans");
 				<thead>
 					<tr>
 						<th>Member name</th>
-						<th>A/C No</th>
+						<th>Loan No</th>
 						<th>Amount</th>
 						<th>Installment</th>
 						<th>Loan date</th>
@@ -34,10 +34,10 @@ $result=$display->disp_all_loans("loans");
 					<?php while($row=mysqli_fetch_assoc($result)){ ?>
 						<tr>
 							<td><?php echo $row['member_name']; ?></td>
-							<td><?php echo $row['acc_no']; ?></td>
+							<td><?php echo $row['loan_no']; ?></td>
 							<td>Rs. <?php echo $row['loan_amount']; ?></td>
 							<td>Rs. <?php echo $row['installment']; ?></td>
-							<td><?php echo $row['loan_date']; ?></td>
+							<td><?php echo $display->date_dmy($row['loan_date']); ?></td>
 							<td><div class="<?php if($row['status']=='active') echo 'text-success'; else echo 'text-danger'; ?>"><?php echo $row['status']; ?></div></td>
 							<td class="text-right" style="width: 90px;">
 								<div class="btn-group" role="group">
@@ -45,7 +45,7 @@ $result=$display->disp_all_loans("loans");
 										Options
 									</button>
 									<div class="dropdown-menu" aria-labelledby="profileoptions">
-										<a class="dropdown-item" href="profile.php?mem=<?php echo $row['acc_no']; ?>&loan=<?php echo $row['loan_id']; ?>">View</a>
+										<a class="dropdown-item" href="profile.php?mem=<?php echo $row['mem_id']; ?>&loan=<?php echo $row['loan_id']; ?>">View</a>
 										<?php if ($row['status']!='closed'): ?>
 											<a class="dropdown-item" href="pay_installment.php?loan=<?php echo $row['loan_id']; ?>">Pay Installment</a>
 										<?php endif ?>

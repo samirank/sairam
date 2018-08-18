@@ -14,6 +14,7 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <!-- Custom fonts for this template-->
   <link href="assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="assets/vendor/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">
   <!-- Custom styles for this template-->
   <link href="assets/vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
   <link href="assets/css/sb-admin.min.css" rel="stylesheet">
@@ -75,7 +76,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapsemembers">
               <li>
-                <a href="addmembership.php">Add members</a>
+                <a href="addmember.php">Add members</a>
               </li>
               <li>
                 <a href="viewmembers.php">View members</a>
@@ -89,7 +90,13 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapsedeposit">
               <li>
+                <a href="new_deposit_acc.php">New deposit account</a>
+              </li>
+              <li>
                 <a href="makedeposit.php">Make deposit</a>
+              </li>
+              <li>
+                <a href="accounts.php">All deposit accounts</a>
               </li>
             </ul>
           </li>
@@ -116,6 +123,12 @@
               <span class="nav-link-text">Messages</span>
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="profile.php">
+              <i class="fa fa-fw fa-user"></i>
+              <span class="nav-link-text">My profile</span>
+            </a>
+          </li>
           <!-- Admin menu ends -->
         <?php endif ?>
 
@@ -131,7 +144,7 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapsemembers">
               <li>
-                <a href="addmembership.php">Add members</a>
+                <a href="addmember.php">Add members</a>
               </li>
               <li>
                 <a href="viewmembers.php">View members</a>
@@ -145,7 +158,13 @@
             </a>
             <ul class="sidenav-second-level collapse" id="collapsedeposit">
               <li>
+                <a href="new_deposit_acc.php">New deposit account</a>
+              </li>
+              <li>
                 <a href="makedeposit.php">Make deposit</a>
+              </li>
+              <li>
+                <a href="accounts.php">All deposit accounts</a>
               </li>
             </ul>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
@@ -169,6 +188,12 @@
               <a class="nav-link" href="messages.php">
                 <i class="fa fa-fw fa-envelope"></i>
                 <span class="nav-link-text">Messages</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="profile.php">
+                <i class="fa fa-fw fa-user"></i>
+                <span class="nav-link-text">My profile</span>
               </a>
             </li>
           </li>

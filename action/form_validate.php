@@ -51,6 +51,81 @@ if (isset($_POST['account_number'])) {
 	echo json_encode($response);
 }
 
+if (isset($_POST['change_accno'])) {
+	$response = array(
+		'valid'          => false,
+		'message'        => 'Post argument "change_accno" is missing.'
+	);
+
+	$validate = new validate();
+	$user     = $validate->change_accno($_POST['change_accno'],$_POST['acc_id']);
+
+	if ($user) {
+    // User name is registered on another account
+		$response = array(
+			'valid'          => false,
+			'message'        => 'Account already exist'
+		);
+	}
+	else {
+    // User name is available
+		$response = array(
+			'valid' => true
+		);
+	}
+	echo json_encode($response);
+}
+
+if (isset($_POST['loan_number'])) {
+	$response = array(
+		'valid'          => false,
+		'message'        => 'Post argument "loan_number" is missing.'
+	);
+
+	$validate = new validate();
+	$user     = $validate->validate_loanno($_POST['loan_number']);
+
+	if ($user) {
+    // User name is registered on another account
+		$response = array(
+			'valid'          => false,
+			'message'        => 'Loan already exist'
+		);
+	}
+	else {
+    // User name is available
+		$response = array(
+			'valid' => true
+		);
+	}
+	echo json_encode($response);
+}
+
+if (isset($_POST['change_loan'])) {
+	$response = array(
+		'valid'          => false,
+		'message'        => 'Post argument "change_loan" is missing.'
+	);
+
+	$validate = new validate();
+	$user     = $validate->change_loanno($_POST['change_loan'],$_POST['loan_id']);
+
+	if ($user) {
+    // User name is registered on another account
+		$response = array(
+			'valid'          => false,
+			'message'        => 'Loan already exist'
+		);
+	}
+	else {
+    // User name is available
+		$response = array(
+			'valid' => true
+		);
+	}
+	echo json_encode($response);
+}
+
 
 if (isset($_POST['deposit_account'])) {
 	$response = array(
@@ -177,6 +252,31 @@ if (isset($_POST['staff_phone'])) {
 }
 
 
+// Validate member phone number
+if (isset($_POST['member_phone'])) {
+	$response = array(
+		'valid'          => false,
+		'message'        => 'Post argument "member_phone" is missing.'
+	);
+
+	$validate = new validate();
+	$user     = $validate->validate_member_phone($_POST['member_phone']);
+
+	if ($user) {
+		$response = array(
+			'valid'          => false,
+			'message'        => 'Phone number already used by other member.'
+		);
+	}
+	else {
+		$response = array(
+			'valid' => true
+		);
+	}
+	echo json_encode($response);
+}
+
+
 // Change username
 if (isset($_POST['change_username'])) {
 	$response = array(
@@ -212,6 +312,31 @@ if (isset($_POST['change_staff_phone'])) {
 
 	$validate = new validate();
 	$user     = $validate->change_staff_phone($_POST['change_staff_phone'],$_POST['user_id']);
+
+	if ($user) {
+    // User name is registered on another account
+		$response = array(
+			'valid'          => false,
+			'message'        => 'Phone number already registered'
+		);
+	}
+	else {
+    // User name is available
+		$response = array(
+			'valid' => true
+		);
+	}
+	echo json_encode($response);
+}
+
+if (isset($_POST['change_member_phone'])) {
+	$response = array(
+		'valid'          => false,
+		'message'        => 'Post argument "change_member_phone" is missing.'
+	);
+
+	$validate = new validate();
+	$user     = $validate->change_member_phone($_POST['change_member_phone'],$_POST['user_id']);
 
 	if ($user) {
     // User name is registered on another account
