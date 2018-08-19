@@ -49,6 +49,17 @@ class validate extends dbconnect {
       return false;
     }
   }
+    // Same day withdrawal
+  function same_day_withdraw($date,$acc_id){
+    $mysqli = $this->mysqli;
+    $sql    = "SELECT * FROM withdrawals WHERE date_of_withdrawal='$date' AND acc_id='$acc_id'";
+    if (mysqli_num_rows($mysqli->query($sql)) >= 1) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 
     // Same day installment
   function same_day_installment($date,$loan_id){

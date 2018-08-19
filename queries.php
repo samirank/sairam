@@ -133,6 +133,8 @@ if ($mysqli->query($sql)) {
 	echo "Created message status table<br>";
 	$flag = 1;
 }
+$sql = "ALTER TABLE `msg_status` ADD `id` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`id`);";
+$mysqli->query($sql);
 
 // Closings table
 $sql = "CREATE TABLE `closings` ( `account_no` INT NOT NULL , `date_of_closing` DATE NOT NULL , `amount_returned` INT NOT NULL , `closed_by` INT NOT NULL , PRIMARY KEY (`account_no`)) ENGINE = InnoDB;";
@@ -150,7 +152,7 @@ $sql = "CREATE TABLE `loan_closings` ( `loan_id` INT NOT NULL , `date_of_closing
 if ($mysqli->query($sql)) {
 	echo "Created loan closings table<br>";
 	$flag = 1;
-}
+
 // Create CLose trigger
 // $sql = "CREATE TRIGGER close_account
 // AFTER INSERT ON closings
@@ -165,6 +167,16 @@ if ($mysqli->query($sql)) {
 $sql = "CREATE TABLE `loan_payments` ( `payment_id` INT NOT NULL AUTO_INCREMENT , `loan_id` INT NOT NULL , `amount` INT NOT NULL , `staff_id` INT NOT NULL , `date_of_payment` DATE NOT NULL , `inserted_on` DATE NOT NULL , PRIMARY KEY (`payment_id`)) ENGINE = InnoDB;";
 if ($mysqli->query($sql)) {
 	echo "Created loan_payments table<br>";
+	$flag = 1;
+}
+$sql = "ALTER TABLE `loan_closings` ADD `slno` INT NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY (`slno`);";
+$mysqli->query($sql);
+}
+
+// Loan closing table
+$sql = "CREATE TABLE `sairam`.`withdrawals` ( `withdrawal_id` INT NOT NULL AUTO_INCREMENT , `acc_id` INT NOT NULL , `amount` INT NOT NULL , `date_of_withdrawal` DATE NOT NULL , `inserted_on` DATE NOT NULL , `staff_id` INT NOT NULL , PRIMARY KEY (`withdrawal_id`)) ENGINE = InnoDB;";
+if ($mysqli->query($sql)) {
+	echo "Created withdrawals table<br>";
 	$flag = 1;
 }
 

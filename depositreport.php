@@ -21,13 +21,7 @@ $result = $display->disp_cond('deposit_accounts',$cond);
 	<?php while ($row = mysqli_fetch_assoc($result)) { ?>
 		<div class="w-75 mx-auto mt-5 mb-5 pr-2 pl-2 pt-4 pb-4 border border-info">
 			<div class="pt-3 pb-3"><h6>Account no: <?php echo $row['account_no']; ?> &emsp;&emsp;Current balance: <?php 
-			$current_balance = $display->display_current_balance($row['acc_id']);
-			$row_cb = mysqli_fetch_assoc($current_balance);
-			if (empty($row_cb['current_balance'])) {
-				echo "N/A";
-			}else{
-				echo "Rs. ".$row_cb['current_balance'];
-			}
+			echo $display->current_balance($row['acc_id']);
 			?> &emsp;&emsp;Account status: <?php echo $row['status']; ?></h6></div>
 			<?php 
 			$result_acc = $display->get_deposit_report($row['acc_id']);

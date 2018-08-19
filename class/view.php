@@ -35,13 +35,17 @@ class display extends dbconnect {
   }
 
 // Function to display current balance
-  function display_current_balance($acc_id){
+  function current_balance($acc_id){
     $mysqli = $this->mysqli;
-    $sql = "SELECT SUM(amount) AS 'current_balance' FROM `deposit` WHERE acc_id='$acc_id';";
-    if ($val = $mysqli->query($sql)) return $val;
-    else {
-      echo $mysqli->error;
-    }
+    $sql = "SELECT SUM(amount) AS 'total_deposit' FROM `deposit` WHERE acc_id='$acc_id';";
+    $total_deposit = mysqli_fetch_array($mysqli->query($sql));
+    $total_deposit = $total_deposit['0'];
+    $sql = "SELECT SUM(amount) AS 'total_withdraw' FROM `withdrawals` WHERE acc_id='$acc_id';";
+    $total_withdraw = mysqli_fetch_array($mysqli->query($sql));
+    $total_withdraw = $total_withdraw['0'];
+
+    $current_balance = $total_deposit - $total_withdraw;
+    return $current_balance;
   }
 
   // Total number of members

@@ -232,6 +232,9 @@ EOD;
 									<button class="btn btn-primary" type="button" onclick="location.href='makedeposit.php?acc=<?php echo $row_acc['acc_id'] ?>'" <?php if ($row_acc['status']=='closed') echo 'disabled'; ?>>
 										Make deposit
 									</button>
+									<button class="btn btn-primary" type="button" onclick="location.href='withdraw.php?acc=<?php echo $row_acc['acc_id'] ?>'" <?php if ($row_acc['status']=='closed') echo 'disabled'; ?>>
+										Withdraw
+									</button>
 								</div>
 								<div class="col text-right">
 									<?php if ($_SESSION['login_role']=='admin'): ?>
@@ -252,15 +255,7 @@ EOD;
 							<div class="row p-2">
 								<div class="col">Current balance :</div>
 								<div class="col">
-									<?php 
-									$current_balance = $display->display_current_balance($row_acc['acc_id']);
-									$row_cb = mysqli_fetch_assoc($current_balance);
-									if (empty($row_cb['current_balance'])) {
-										echo "N/A";
-									}else{
-										echo "Rs. ".$row_cb['current_balance'];
-									}
-									?>
+									<b>Rs. <?php echo $display->current_balance($row_acc['acc_id']); ?></b>
 								</div>
 							</div>
 							<div class="row p-2 bg-light-gray">
@@ -342,6 +337,9 @@ EOD;
 															<button class="btn btn-primary" type="button" onclick="location.href='makedeposit.php?acc=<?php echo $row_acc['acc_id'] ?>'" <?php if ($row_acc['status']=='closed') echo 'disabled'; ?>>
 																Make deposit for account <?php echo $i; ?>
 															</button>
+															<button class="btn btn-primary" type="button" onclick="location.href='withdraw.php?acc=<?php echo $row_acc['acc_id'] ?>'" <?php if ($row_acc['status']=='closed') echo 'disabled'; ?>>
+																Withdraw <?php echo $i; ?>
+															</button>
 														</div>
 														<div class="col text-right">
 															<?php if ($_SESSION['login_role']=='admin'): ?>
@@ -365,16 +363,8 @@ EOD;
 													</div>
 													<div class="row p-2 bg-light-gray">
 														<div class="col">Current Balance :</div>
-														<div class="col"><b>
-															<?php 
-															$current_balance = $display->display_current_balance($row_acc['acc_id']);
-															$row_cb = mysqli_fetch_assoc($current_balance);
-															if (empty($row_cb['current_balance'])) {
-																echo "N/A";
-															}else{
-																echo "Rs. ".$row_cb['current_balance'];
-															}
-															?></b>
+														<div class="col">
+															<b>Rs. <?php echo $display->current_balance($row_acc['acc_id']); ?></b>
 														</div>
 													</div>
 													<div class="row p-2 bg-light-gray">
@@ -464,15 +454,15 @@ EOD;
 								<div class="col">Loan amount :</div>
 								<div class="col"><b>Rs. <?php echo $loan_row['loan_amount']; ?></b></div>
 							</div>
-							<div class="row p-2">
+							<div class="row p-1">
 								<div class="col">Interest amount :</div>
 								<div class="col">Rs. <?php echo $loan_row['interest_amount']; ?></div>
 							</div>
-							<div class="row p-2">
+							<div class="row p-1">
 								<div class="col">Total loan amount :</div>
 								<div class="col">Rs. <?php echo ($loan_row['interest_amount']+$loan_row['loan_amount']); ?></div>
 							</div>
-							<div class="row p-2 bg-light-gray">
+							<div class="row p-1 bg-light-gray">
 								<div class="col">Amount paid :</div>
 								<div class="col"><b>
 									<?php 
@@ -587,15 +577,15 @@ EOD;
 														<div class="col">Loan amount :</div>
 														<div class="col"><b>Rs. <?php echo $loan_row['loan_amount']; ?></b></div>
 													</div>
-													<div class="row p-2">
+													<div class="row p-1">
 														<div class="col">Interest amount :</div>
 														<div class="col">Rs. <?php echo $loan_row['interest_amount']; ?></div>
 													</div>
-													<div class="row p-2">
+													<div class="row p-1">
 														<div class="col">Total loan amount :</div>
 														<div class="col">Rs. <?php echo ($loan_row['interest_amount']+$loan_row['loan_amount']); ?></div>
 													</div>
-													<div class="row p-2 bg-light-gray">
+													<div class="row p-1 bg-light-gray">
 														<div class="col">Amount paid :</div>
 														<div class="col"><b>
 															<?php 

@@ -59,7 +59,7 @@ if (isset($_POST['login'])) {
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input type="text" class="form-control" name=username id="username" placeholder="Enter email" autofocus>
-					<small id="emailHelp" class="form-text text-muted">Please enter your username.</small>
+					<!-- <small id="emailHelp" class="form-text text-muted">Please enter your username.</small> -->
 				</div>
 				<div class="form-group">
 					<label for="pass">Password</label>
@@ -69,7 +69,7 @@ if (isset($_POST['login'])) {
 				<button type="submit" name="login" class="btn btn-primary"  onclick="return encrypt();">Submit</button>
 			</form>	
 		</div>
-		<?php if (isset($_SESSION['msg'])): ?>
+		<?php if ((isset($_SESSION['msg']))&&(!isset($_POST['login']))): ?>
 			<div class="msg-box">
 				<?php echo $_SESSION['msg']; unset($_SESSION['msg']); ?>
 			</div>

@@ -86,14 +86,17 @@
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsedeposit" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-money"></i>
-              <span class="nav-link-text">Deposit</span>
+              <span class="nav-link-text">Deposit account</span>
             </a>
             <ul class="sidenav-second-level collapse" id="collapsedeposit">
               <li>
                 <a href="new_deposit_acc.php">New deposit account</a>
               </li>
               <li>
-                <a href="makedeposit.php">Make deposit</a>
+                <a href="makedeposit.php">Deposit money</a>
+              </li>
+              <li>
+                <a href="withdraw.php">Withdraw money</a>
               </li>
               <li>
                 <a href="accounts.php">All deposit accounts</a>
@@ -154,14 +157,17 @@
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">
             <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapsedeposit" data-parent="#exampleAccordion">
               <i class="fa fa-fw fa-money"></i>
-              <span class="nav-link-text">Deposit</span>
+              <span class="nav-link-text">Deposit account</span>
             </a>
             <ul class="sidenav-second-level collapse" id="collapsedeposit">
               <li>
                 <a href="new_deposit_acc.php">New deposit account</a>
               </li>
               <li>
-                <a href="makedeposit.php">Make deposit</a>
+                <a href="makedeposit.php">Deposit money</a>
+              </li>
+              <li>
+                <a href="withdraw.php">Withdraw money</a>
               </li>
               <li>
                 <a href="accounts.php">All deposit accounts</a>

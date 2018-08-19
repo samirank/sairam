@@ -72,6 +72,18 @@ class insert extends dbconnect {
     }
   }
 
+    // Withdraw money
+  function withdraw_money($amount,$date_of_withdrawal,$acc_id,$staff_id){
+    $mysqli = $this->mysqli;
+    $sql = "INSERT INTO `withdrawals`(`acc_id`, `amount`, `date_of_withdrawal`, `inserted_on`, `staff_id`) VALUES ('$acc_id','$amount','$date_of_withdrawal',now(),'$staff_id')";
+    if($mysqli->query($sql)){
+      return true;
+    }else{
+      // echo $mysqli->error;
+      return false;
+    }
+  }
+
   // New loan
   function new_loan($loan_no,$mem_id,$installment,$period,$mode,$rate_of_interest,$interest_calculated,$guarantor_name,$security_particulars,$loan_purpose,$loan_date,$closing_date,$added_by,$loan_amt,$interest_amount){
     $mysqli = $this->mysqli;

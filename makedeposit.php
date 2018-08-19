@@ -9,7 +9,7 @@ $validate = new validate();
 	<li class="breadcrumb-item">
 		<a href="dashboard.php">Dashboard</a>
 	</li>
-	<li class="breadcrumb-item active">Make deposit</li>
+	<li class="breadcrumb-item active">Deposit money</li>
 </ol>	
 <?php if (!isset($_GET['acc'])): ?>
 	<?php 
