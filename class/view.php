@@ -280,7 +280,7 @@ function get_user_name($id){
 
 // Format date to DD-MMM-YYYY
 function date_dmy($date){
-  return date("d-M-Y", strtotime($date));
+  return date("d-m-Y", strtotime($date));
 }
 
 // Format date to YYYY-MM-DD
@@ -331,7 +331,7 @@ function get_loan_report($loan_id){
 // Get Deposit report
 function get_deposit_report($acc_id){
   $mysqli = $this->mysqli;
-  $sql = "SELECT * FROM deposit WHERE acc_id='$acc_id' ORDER BY date_of_payment ASC";
+  $sql = "SELECT deposit.deposit_id AS id, amount AS deposit_amount, NULL AS withdrawal_amount, date_of_payment AS date, staff_id FROM deposit WHERE deposit.acc_id='$acc_id' UNION ALL SELECT withdrawals.withdrawal_id AS id, NULL AS deposit_amount, amount AS withdrawal_amount, date_of_withdrawal AS date, staff_id FROM withdrawals WHERE withdrawals.acc_id='$acc_id' ORDER BY date ASC";
   return $mysqli->query($sql);
 }
 // End of class 

@@ -7,13 +7,13 @@ $update = new update();
 if($_SESSION['login_role']=="staff"){
 
 	// Uncomment to allow staff to edit member profile
-	if (isset($_GET['mem'])) {
-		$profile_type = "member";
-		$profile_id = $_GET['mem'];
-	}else{
-		$profile_type = "staff";
-		$profile_id = $_SESSION['login_id'];
-	}
+	// if (isset($_GET['mem'])) {
+	// 	$profile_type = "member";
+	// 	$profile_id = $_GET['mem'];
+	// }else{
+	// 	$profile_type = "staff";
+	// 	$profile_id = $_SESSION['login_id'];
+	// }
 }
 if($_SESSION['login_role']=="admin"){
 	if (isset($_GET['mem'])) {
@@ -488,7 +488,7 @@ $json = json_encode($json);
 	<div class="card card-register mx-auto mt-5 border-primary">
 		<div class="card-header bg-primary-light-2">Edit member profile</div>
 		<div class="card-body">
-			<form action="action/edit_member.php" method="POST">
+			<form action="action/edit_member.php?mem=<?php echo $row['mem_id']; ?>" method="POST">
 
 				<!-- Name -->
 				<div class="form-group">

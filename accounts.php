@@ -28,18 +28,10 @@ $result = $display->deposit_accounts();
 									<td><?php echo $row['account_no']; ?></td>
 									<td><?php echo $display->get_member_name($row['mem_id']); ?></td>
 									<td><?php echo $display->date_dmY($row['joining_date']); ?></td>
-									<td><?php $closing_date = date('d-M-Y', strtotime("+".$row['period']." months", strtotime($row['joining_date'])));
+									<td><?php $closing_date = date('d-m-Y', strtotime("+".$row['period']." months", strtotime($row['joining_date'])));
 									echo $closing_date; ?></td>
 									<td>
-										<?php 
-										$current_balance = $display->display_current_balance($row['acc_id']);
-										$row_cb = mysqli_fetch_assoc($current_balance);
-										if (empty($row_cb['current_balance'])) {
-											echo "N/A";
-										}else{
-											echo "Rs. ".$row_cb['current_balance'];
-										}
-										?>
+										<?php echo $display->current_balance($row['acc_id']); ?>
 									</td>
 									<td>
 										<?php echo $row['status'] ?>
