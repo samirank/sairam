@@ -438,6 +438,9 @@ EOD;
 								<div class="col text-right">
 									<?php if ($_SESSION['login_role']=='admin'): ?>
 										<button class="btn btn-primary" onclick="location.href='edit.php?loan=<?php echo $loan_row['loan_id']; ?>'"<?php if ($loan_row['status']!='active') echo 'hidden'; ?>>Edit loan</button>
+										<?php if ($loan_row['status']=='closed'): ?>
+											<a href="reopen.php?loan=<?php echo $loan_row['loan_id']; ?>" class="btn btn-primary">Reopen loan</a>
+										<?php endif ?>
 									<?php endif ?>
 									<button type="button" class="btn btn-danger closeloanbtn" data-toggle="modal" data-target="#closeloanmodal" data-id="<?php echo $loan_row['loan_id']; ?>"<?php if ($loan_row['status']=='closed') echo 'disabled'; ?>>Close loan</button>
 								</div>
@@ -561,6 +564,9 @@ EOD;
 														<div class="col text-right">
 															<?php if ($_SESSION['login_role']=='admin'): ?>
 																<button class="btn btn-primary" onclick="location.href='edit.php?loan=<?php echo $loan_row['loan_id']; ?>'"<?php if ($loan_row['status']!='active') echo 'hidden'; ?>>Edit loan</button>
+																<?php if ($loan_row['status']=='closed'): ?>
+																	<a href="reopen.php?mem=<?php echo $loan_row['mem_id']; ?>&loan=<?php echo $loan_row['loan_id']; ?>" class="btn btn-primary">Reopen loan</a>
+																<?php endif ?>
 															<?php endif ?>
 															<button type="button" class="btn btn-danger closeloanbtn" data-toggle="modal" data-target="#closeloanmodal" data-id="<?php echo $loan_row['loan_id']; ?>"<?php if ($loan_row['status']=='closed') echo 'disabled'; ?>>Close loan</button>
 														</div>

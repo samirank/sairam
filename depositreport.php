@@ -67,7 +67,7 @@ $result = $display->disp_cond('deposit_accounts',$cond);
 		</div>
 	<?php } ?>
 	<?php else: ?>
-		<?php echo "No loan found for this account"; ?>
+		<?php echo "No deposit account found for this member"; ?>
 	<?php endif ?>
 
 	<?php include('template/foot.php'); ?>

@@ -233,6 +233,18 @@ class update extends dbconnect {
 		}
 	}
 
+	// Reopen loan
+	function reopen_loan($loan_id){
+		$mysqli = $this->mysqli;
+		$sql = "UPDATE loans SET status='active',last_updated_on=now() WHERE loan_id='$loan_id';";
+		if($mysqli->query($sql)){
+			return true;
+		}else{
+			// echo $mysqli->error;
+			return false;
+		}
+	}
+
 
 // End of class
 }

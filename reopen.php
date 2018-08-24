@@ -6,5 +6,9 @@ if ($_SESSION['login_role']=='admin') {
 		$update->reopen_acc($_GET['acc']);
 		header("location:profile.php?mem=".$_GET['mem']."&acc=".$_GET['acc']);
 	}
+	if ((isset($_GET['loan']))&&(isset($_GET['mem']))) {
+		$update->reopen_loan($_GET['loan']);
+		header("location:profile.php?mem=".$_GET['mem']."&loan=".$_GET['loan']);
+	}
 }
 ?>
