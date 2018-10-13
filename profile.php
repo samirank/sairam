@@ -278,8 +278,8 @@ EOD;
 								<div class="col">Closing date :</div>
 								<div class="col">
 									<?php
-									$closing_date = date('d-M-Y', strtotime("+".$row_acc['period']." months", strtotime($row_acc['joining_date'])));
-									echo $closing_date;
+									$closing_date = date('d-M-Y', strtotime("+".($row_acc['period']+1)." months", strtotime($row_acc['joining_date'])));
+									echo $display->date_dmy($closing_date);
 									?>
 								</div>
 							</div>
@@ -387,7 +387,7 @@ EOD;
 														<div class="col">Closing date :</div>
 														<div class="col">
 															<?php
-															$closing_date = date('d-M-Y', strtotime("+".$row_acc['period']." months", strtotime($row_acc['joining_date'])));
+															$closing_date = date('d-M-Y', strtotime("+".($row_acc['period']+1)." months", strtotime($row_acc['joining_date'])));
 															echo $display->date_dmy($closing_date);
 															?>
 														</div>
@@ -442,7 +442,10 @@ EOD;
 											<a href="reopen.php?loan=<?php echo $loan_row['loan_id']; ?>" class="btn btn-primary">Reopen loan</a>
 										<?php endif ?>
 									<?php endif ?>
-									<button type="button" class="btn btn-danger closeloanbtn" data-toggle="modal" data-target="#closeloanmodal" data-id="<?php echo $loan_row['loan_id']; ?>"<?php if ($loan_row['status']=='closed') echo 'disabled'; ?>>Close loan</button>
+									<?php 
+									$remaining_amt = ($loan_row['interest_amount']+$loan_row['loan_amount'])-$display->total_loan_amt_paid($loan_row['loan_id']);
+									?>
+									<button type="button" class="btn btn-danger closeloanbtn" data-toggle="modal" data-target="#closeloanmodal" data-id="<?php echo $loan_row['loan_id']; ?>"<?php if (($loan_row['status']=='closed')||($remaining_amt!=0)) echo 'disabled'; ?>>Close loan</button>
 								</div>
 							</div>
 							<div class="row p-1">
@@ -476,6 +479,11 @@ EOD;
 										echo "N/A";
 									}
 									?></b>
+								</div>
+							</div>
+							<div class="row p-1 bg-light-gray">
+								<div class="col">Remaining amount :</div>
+								<div class="col"><b>Rs. <?php echo $remaining_amt; ?></b>
 								</div>
 							</div>
 							<div class="row p-1">
@@ -556,7 +564,7 @@ EOD;
 										<?php $i = 1; ?>
 										<?php while($loan_row = mysqli_fetch_assoc($loan_res)){ ?>
 											<div class="tab-pane fade show <?php if($i==$active_loan_counter) echo 'active'; elseif($_GET['loan']==$loan_row['loan_id']) echo 'active'; ?>" id="v-pills-loan-<?php echo $i; ?>" role="tabpanel" aria-labelledby="v-pills-loan-<?php echo $i; ?>-tab">
-												<div class="offset-md-2 text-left border rounded">
+												<div class="offset-md-2 p-3 text-left border rounded">
 													<div class="row p-2 mt-2 mb-2">
 														<div class="col">
 															<button class="btn btn-primary" type="button" onclick="location.href='pay_installment.php?loan=<?php echo $loan_row['loan_id'] ?>'" <?php if ($loan_row['status']=='closed') echo 'disabled'; ?>>Pay Installment for loan <?php echo $i; ?></button>
@@ -568,7 +576,10 @@ EOD;
 																	<a href="reopen.php?mem=<?php echo $loan_row['mem_id']; ?>&loan=<?php echo $loan_row['loan_id']; ?>" class="btn btn-primary">Reopen loan</a>
 																<?php endif ?>
 															<?php endif ?>
-															<button type="button" class="btn btn-danger closeloanbtn" data-toggle="modal" data-target="#closeloanmodal" data-id="<?php echo $loan_row['loan_id']; ?>"<?php if ($loan_row['status']=='closed') echo 'disabled'; ?>>Close loan</button>
+															<?php 
+															$remaining_amt = ($loan_row['interest_amount']+$loan_row['loan_amount'])-$display->total_loan_amt_paid($loan_row['loan_id']);
+															?>
+															<button type="button" class="btn btn-danger closeloanbtn" data-toggle="modal" data-target="#closeloanmodal" data-id="<?php echo $loan_row['loan_id']; ?>"<?php if (($loan_row['status']=='closed')||($remaining_amt!=0)) echo 'disabled'; ?>>Close loan</button>
 														</div>
 													</div>
 													<div class="row p-1">
@@ -602,6 +613,11 @@ EOD;
 																echo "N/A";
 															}
 															?></b>
+														</div>
+													</div>
+													<div class="row p-1 bg-light-gray">
+														<div class="col">Remaining amount :</div>
+														<div class="col"><b>Rs. <?php echo $remaining_amt; ?></b>
 														</div>
 													</div>
 													<div class="row p-1">

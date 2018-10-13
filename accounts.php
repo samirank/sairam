@@ -27,8 +27,8 @@ $result = $display->deposit_accounts();
 								<tr>
 									<td><?php echo $row['account_no']; ?></td>
 									<td><?php echo $display->get_member_name($row['mem_id']); ?></td>
-									<td><?php echo $display->date_dmY($row['joining_date']); ?></td>
-									<td><?php $closing_date = date('d-m-Y', strtotime("+".$row['period']." months", strtotime($row['joining_date'])));
+									<td><?php echo $display->date_ymd($row['joining_date']); ?></td>
+									<td><?php $closing_date = date('Y-m-d', strtotime("+".($row['period']+1)." months", strtotime($row['joining_date'])));
 									echo $closing_date; ?></td>
 									<td>
 										<?php echo $display->current_balance($row['acc_id']); ?>

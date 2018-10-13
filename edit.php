@@ -303,7 +303,7 @@ $json = json_encode($json);
 				<div class="form-group">
 					<div class="form-row">
 						<label for="exampleInputName">Name of guarantor</label>
-						<input name="guarantor_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" data-validation="required" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only" value="<?php echo $row['guarantor_name']; ?>">
+						<input name="guarantor_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only" value="<?php echo $row['guarantor_name']; ?>">
 					</div>
 				</div>
 
@@ -312,7 +312,7 @@ $json = json_encode($json);
 				<div class="form-group">
 					<div class="form-row">
 						<label for="security_particulars" data-validation="required">Particulars of securities offered</label>
-						<input type="text" name="security_particulars" class="form-control" data-validation="required" value="<?php echo $row['security_particulars']; ?>">
+						<input type="text" name="security_particulars" class="form-control" value="<?php echo $row['security_particulars']; ?>">
 					</div>
 				</div>
 

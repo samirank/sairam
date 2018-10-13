@@ -14,7 +14,7 @@ if (isset($_SESSION['timeout']) && (time() - $_SESSION['timeout'] > $inactive)) 
     session_destroy();  // destroy session data
     session_start();	//Start new session
     $_SESSION['msg'] = "Session timed out. Please log in again.";
-    $_SESSION['redirect_url'] = $_SERVER["PHP_SELF"];
+    $_SESSION['redirect_url'] = $_SERVER["PHP_SELF"]."?".http_build_query($_GET);
     header('location: index.php');
 }
 $_SESSION['timeout'] = time(); // Update session

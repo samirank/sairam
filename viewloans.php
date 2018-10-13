@@ -26,6 +26,7 @@ $result=$display->disp_all_loans("loans");
 						<th>Amount</th>
 						<th>Installment</th>
 						<th>Loan date</th>
+						<th>Closing date</th>
 						<th>Status</th>
 						<th></th>
 					</tr>
@@ -37,7 +38,8 @@ $result=$display->disp_all_loans("loans");
 							<td><?php echo $row['loan_no']; ?></td>
 							<td>Rs. <?php echo $row['loan_amount']; ?></td>
 							<td>Rs. <?php echo $row['installment']; ?></td>
-							<td><?php echo $display->date_dmy($row['loan_date']); ?></td>
+							<td><?php echo $display->date_ymd($row['loan_date']); ?></td>
+							<td><?php echo $display->date_ymd($row['closing_date']); ?></td>
 							<td><div class="<?php if($row['status']=='active') echo 'text-success'; else echo 'text-danger'; ?>"><?php echo $row['status']; ?></div></td>
 							<td class="text-right" style="width: 90px;">
 								<div class="btn-group" role="group">

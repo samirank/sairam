@@ -38,7 +38,7 @@ $sql ="CREATE TABLE `members` (
   `permanent_address` text NOT NULL,
   `permanent_pincode` varchar(10) NOT NULL,
   `occupation` varchar(20) NOT NULL,
-  `member_phone` varchar(12) NOT NULL,
+  `member_phone` varchar(12) NULL,
   `joining_agent` int(11) NOT NULL,
   `current_agent` int(11) NOT NULL,
   `added_on` date NOT NULL,
@@ -52,8 +52,8 @@ if ($mysqli->query($sql)) {
 	echo "Created members table<br>";
 	$flag = 1;
 }
-$sql = "ALTER TABLE `members` ADD UNIQUE(`member_phone`);";
-$mysqli->query($sql);
+// $sql = "ALTER TABLE `members` ADD UNIQUE(`member_phone`);";
+// $mysqli->query($sql);
 
 
 // Create table deposit_accouonts

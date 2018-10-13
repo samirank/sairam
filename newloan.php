@@ -228,7 +228,7 @@
 				<div class="form-group">
 					<div class="form-row">
 						<label for="exampleInputName">Name of guarantor</label>
-						<input name="guarantor_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" data-validation="required" data-sanitize="trim capitalize"  data-validation-allowing=" " data-validation-error-msg="Enter first and last name only">
+						<input name="guarantor_name" class="form-control" id="exampleInputName" type="text" aria-describedby="nameHelp" data-sanitize="trim capitalize">
 					</div>
 				</div>
 
@@ -294,7 +294,7 @@
     <div class="form-group">
     	<div class="form-row">
     		<label for="phno">Phone</label>
-    		<input class="form-control" data-validation="required number length server" data-validation-param-name="member_phone" data-validation-url="action/form_validate.php" data-validation-length="10" data-validation-error-msg="Please enter 10 digit mobile number" type="text" name="member_phone" maxlength="10" <?php if (isset($row['member_phone'])){ echo "value='".$row['member_phone']."' disabled"; } ?>>
+    		<input class="form-control" type="text" name="member_phone" maxlength="10" <?php if (isset($row['member_phone'])){ echo "value='".$row['member_phone']."' disabled"; } ?>>
     	</div>
     </div>
 
@@ -303,7 +303,7 @@
     <div class="form-group">
     	<div class="form-row">
     		<label for="security_particulars" data-validation="required">Particulars of securities offered</label>
-    		<input type="text" name="security_particulars" class="form-control" data-validation="required">
+    		<input type="text" name="security_particulars" class="form-control">
     	</div>
     </div>
 

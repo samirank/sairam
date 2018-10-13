@@ -11,7 +11,7 @@ function maturity_notif(){
 	$insert = $GLOBALS['insert'];
 	$result = $display->get_maturity_list();
 	while ($row = mysqli_fetch_assoc($result)) {
-		$closing_date = date('Y-m-d', strtotime("+".$row['period']." months", strtotime($row['joining_date'])));
+		$closing_date = date('Y-m-d', strtotime("+".$row['period']+1." months", strtotime($row['joining_date'])));
 		$datetime1 = date_create(date('Y-m-d'));
 		$datetime2 = date_create($closing_date);
 		$interval = date_diff($datetime1, $datetime2);

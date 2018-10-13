@@ -19,11 +19,19 @@ $result = $display->disp_cond('loans',$cond);
 <?php if (mysqli_num_rows($result)!=0): ?>
 	<div class="pt-3 pb-3 w-75 mx-auto"><h6>Member name: <?php echo $display->get_member_name($mem_id); ?></h6></div>
 	<?php while ($row = mysqli_fetch_assoc($result)) { ?>
+		<?php 
+		$result_loan = $display->get_loan_report($row['loan_id']);
+		$total_amt = $row['loan_amount']+$row['interest_amount'];
+		$remaining_amt = null;
+		$total_paid = 0;
+		while ($row_loan=mysqli_fetch_assoc($result_loan)){
+			$total_paid+=$row_loan['amount'];
+		}
+		mysqli_data_seek($result_loan,0);
+		$remaining_amt = $total_amt-$total_paid;
+		?>
 		<div class="w-75 mx-auto mt-5 mb-5 pr-2 pl-2 pt-4 pb-4 border border-info">
-			<div class="pt-3 pb-3"><h6>Loan no: <?php echo $row['loan_no']; ?> &emsp;&emsp;Loan amount: Rs. <?php echo $row['loan_amount']; ?> &emsp;&emsp;Interest amount: Rs. <?php echo $row['interest_amount']; ?> &emsp;&emsp;<br><br>Total loan amount: Rs. <?php echo ($row['loan_amount']+$row['interest_amount']); ?>&emsp;&emsp;Loan status: <?php echo $row['status']; ?></h6></div>
-			<?php 
-			$result_loan = $display->get_loan_report($row['loan_id']);
-			?>
+			<div class="pt-3 pb-3"><h6>Loan no: <?php echo $row['loan_no']; ?> &emsp;&emsp;Loan amount: Rs. <?php echo $row['loan_amount']; ?> &emsp;&emsp;Interest amount: Rs. <?php echo $row['interest_amount']; ?> &emsp;&emsp;<br><br>Total loan amount: Rs. <?php echo $total_amt; ?>&emsp;&emsp;Remaining amount: Rs. <?php echo $remaining_amt; ?>&emsp;&emsp;Loan status: <?php echo $row['status']; ?></h6></div>
 
 			<table class="table">
 				<?php if (mysqli_num_rows($result_loan)!=0): ?>

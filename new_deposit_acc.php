@@ -251,7 +251,7 @@
       <div class="form-group">
         <div class="form-row">
           <label for="phno">Phone</label>
-          <input class="form-control" data-validation="required number length server" data-validation-param-name="member_phone" data-validation-url="action/form_validate.php" data-validation-length="10" data-validation-error-msg="Please enter 10 digit mobile number" type="text" name="member_phone" maxlength="10" <?php if (isset($row['member_phone'])){ echo "value='".$row['member_phone']."' disabled"; } ?>>
+          <input class="form-control" type="text" name="member_phone" maxlength="10" <?php if (isset($row['member_phone'])){ echo "value='".$row['member_phone']."' disabled"; } ?>>
         </div>
       </div>
 

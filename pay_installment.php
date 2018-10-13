@@ -175,7 +175,7 @@ $validate = new validate();
 								<div class="input-group-prepend">
 									<span class="input-group-text">Rs.</span>
 								</div>
-								<input type="text" class="form-control" name="amount" data-validation="required number" data-validation-error-msg="Please enter amount." autofocus>
+								<input type="text" class="form-control" name="amount" data-validation="required number" data-validation-error-msg="Please enter amount." autocomplete="off" autofocus>
 							</div>
 						</div>
 					</div>
@@ -183,18 +183,22 @@ $validate = new validate();
 					<div class="row p-2">
 						<div class="col">Date of payment :</div>
 						<div class="col">
-							<input class="form-control datepicker" name="date" data-validation="date" data-validation-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
+							<?php if ($_SESSION['login_role']=='admin'): ?>
+								<input class="form-control datepicker" name="date" data-validation="date" data-validation-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" autocomplete="off">
+								<?php else: ?>
+									<input class="form-control" name="date" value="<?php echo date("d-m-Y"); ?>" disabled>
+								<?php endif ?>
+							</div>
 						</div>
-					</div>
-					<input type="hidden" name="loan_id" value="<?php echo $row['loan_id']; ?>">
-					<input type="hidden" name="mem_id" value="<?php echo $row['mem_id']; ?>">
-					<button type="submit" name="pay_installment" class="btn btn-primary btn-block">Confirm Payment</button>
-				</form>
-			</div>
-			<?php else: ?>
-				<div><h3>Loan status not active.</h3></div>
-				<div><a href="pay_installment.php">Go back</a></div>
+						<input type="hidden" name="loan_id" value="<?php echo $row['loan_id']; ?>">
+						<input type="hidden" name="mem_id" value="<?php echo $row['mem_id']; ?>">
+						<button type="submit" name="pay_installment" class="btn btn-primary btn-block">Confirm Payment</button>
+					</form>
+				</div>
+				<?php else: ?>
+					<div><h3>Loan status not active.</h3></div>
+					<div><a href="pay_installment.php">Go back</a></div>
+				<?php endif ?>
 			<?php endif ?>
-		<?php endif ?>
 
-		<?php include('template/foot.php'); ?>
+			<?php include('template/foot.php'); ?>

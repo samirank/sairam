@@ -58,7 +58,7 @@ $result = $display->disp_cond('deposit_accounts',$cond);
 							<td class="text-center"><?php if(empty($row_acc['deposit_amount'])) echo "-"; else echo $row_acc['deposit_amount']; ?></td>
 							<td class="text-center"><?php if(empty($row_acc['withdrawal_amount'])) echo "-"; else echo $row_acc['withdrawal_amount']; ?></td>
 							<td class="text-center"><?php echo $total; ?></td>
-							<td class="text-center"><a href="editreport.php?<?php if(empty($row_acc['deposit_amount'])) echo "w=".$row_acc['id']; else echo "d=".$row_acc['id']; ?>">edit</a></td>
+							<td class="text-center"><a href="editreport.php?<?php if(empty($row_acc['deposit_amount'])) echo "w=".$row_acc['id']; else echo "d=".$row_acc['id']; ?>&m=<?php echo $mem_id; ?>">edit</a></td>
 						</tr>
 						<?php $sl++; ?>
 					<?php } ?>

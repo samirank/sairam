@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Kolkata');
 class dbconnect extends mysqli {
   protected $DBLOCATION = "localhost";
   protected $DBUSER     = "sairam";

@@ -68,6 +68,77 @@ class display extends dbconnect {
     }
   }
 
+  // Total loans of one agent
+  function total_agent_loans($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(loans.loan_id) AS total FROM loans WHERE loans.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id');";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
+   // Total active loans of one agent
+  function total_agent_active_loans($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(loans.loan_id) AS total FROM loans WHERE loans.status='active' AND loans.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id');";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  } 
+
+  // Total closed loans of one agent
+  function total_agent_closed_loans($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(loans.loan_id) AS total FROM loans WHERE loans.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id') AND NOT loans.status='active';";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+//All loan accounts of an agent
+  function agent_all_loan_acc($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT loan_no, mem_id FROM loans WHERE loans.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id');";
+    return $mysqli->query($sql);
+  }
+  // Total deposit accounts of one agent
+  function total_agent_deposit_acc($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(deposit_accounts.acc_id) AS total FROM deposit_accounts WHERE deposit_accounts.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id');";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
+    // Total active deposit accounts of one agent
+  function total_agent_active_deposit_acc($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(deposit_accounts.acc_id) AS total FROM deposit_accounts WHERE deposit_accounts.status='active' AND deposit_accounts.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id');";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+    // Total active deposit accounts of one agent
+  function total_agent_closed_deposit_acc($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT COUNT(deposit_accounts.acc_id) AS total FROM deposit_accounts WHERE deposit_accounts.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id') AND NOT deposit_accounts.status='active';";
+    if ($val = $mysqli->query($sql)) {
+      $val = mysqli_fetch_assoc($val);
+      return $val['total'];
+    }
+  }
+
+//All deposit accounts of an agent
+  function agent_all_deposit_acc($agent_id){
+    $mysqli = $this->mysqli;
+    $sql = "SELECT deposit_accounts.account_no, deposit_accounts.mem_id FROM deposit_accounts WHERE deposit_accounts.status='active' AND deposit_accounts.mem_id IN (SELECT `members`.`mem_id` FROM `members` WHERE `members`.`current_agent`='$agent_id');";
+    return $mysqli->query($sql);
+  }
+
   // Total number of agents
   function total_agents(){
     $mysqli = $this->mysqli;
@@ -102,14 +173,14 @@ class display extends dbconnect {
   // Display all loans
   function disp_all_loans(){
     $mysqli = $this->mysqli;
-    $sql = "SELECT loans.loan_amount,loans.interest_amount,loans.loan_no,loans.installment,loans.loan_id,loans.mem_id,loans.status,loans.loan_date,members.member_name FROM loans JOIN members ON loans.mem_id=members.mem_id WHERE 1";
+    $sql = "SELECT loans.loan_amount,loans.interest_amount,loans.loan_no,loans.installment,loans.loan_id,loans.mem_id,loans.status,loans.loan_date,loans.closing_date,members.member_name FROM loans JOIN members ON loans.mem_id=members.mem_id WHERE 1";
     if ($val = $mysqli->query($sql)) return $val;
     else {
       echo $mysqli->error;
     }
   }
 
-// Get member name from account no
+// Get member name from mem_id
   function get_member_name($id){
     $mysqli = $this->mysqli;
     $sql  = "SELECT member_name from members where mem_id='$id'";
@@ -130,6 +201,53 @@ function get_staff_name($id){
   $val = $mysqli->query($sql);
   $val = mysqli_fetch_assoc($val);
   $val = $val['name'];
+  if ($val){
+   return $val;
+ }else {
+  return "Unknown";
+}
+}
+
+// Get agent datewise loan report
+function get_agent_datewise_loan_report($date,$agent){
+  $mysqli = $this->mysqli;
+  $date = date("Y-m-d", strtotime($date));
+  $sql = "SELECT loan_payments.loan_id, loans.loan_no, loan_payments.amount, loan_payments.date_of_payment, loans.mem_id FROM loan_payments JOIN loans ON loan_payments.loan_id=loans.loan_id WHERE loan_payments.loan_id IN (SELECT loans.loan_id FROM loans WHERE loans.mem_id IN (SELECT members.mem_id FROM members WHERE members.current_agent='$agent')) AND loan_payments.date_of_payment='$date';";
+  $val = $mysqli->query($sql);
+  if ($val) {
+    return $val;
+  }
+}
+
+// Get agent datewise account deposit report
+function get_agent_datewise_account_deposit_report($date,$agent){
+  $mysqli = $this->mysqli;
+  $date = date("Y-m-d", strtotime($date));
+  $sql = "SELECT deposit_accounts.mem_id, deposit_accounts.account_no, deposit.acc_id, deposit.amount, deposit.date_of_payment FROM deposit JOIN deposit_accounts ON deposit.acc_id=deposit_accounts.acc_id WHERE deposit.acc_id IN (SELECT deposit_accounts.acc_id FROM deposit_accounts WHERE deposit_accounts.mem_id IN (SELECT members.mem_id FROM members WHERE members.current_agent='$agent')) AND deposit.date_of_payment='$date'";
+  $val = $mysqli->query($sql);
+  if ($val) {
+    return $val;
+  }
+}
+
+// Get agent datewise account withdrawal report
+function get_agent_datewise_account_withdrawal_report($date,$agent){
+  $mysqli = $this->mysqli;
+  $date = date("Y-m-d", strtotime($date));
+  $sql = "SELECT deposit_accounts.mem_id, deposit_accounts.account_no, withdrawals.acc_id, withdrawals.amount, withdrawals.date_of_withdrawal FROM withdrawals JOIN deposit_accounts ON withdrawals.acc_id=deposit_accounts.acc_id WHERE withdrawals.acc_id IN (SELECT deposit_accounts.acc_id FROM deposit_accounts WHERE deposit_accounts.mem_id IN (SELECT members.mem_id FROM members WHERE members.current_agent='$agent')) AND withdrawals.date_of_withdrawal='$date'";
+  $val = $mysqli->query($sql);
+  if ($val) {
+    return $val;
+  }
+}
+
+  // Get Agent name from agent_id
+function get_agent_name($id){
+  $mysqli = $this->mysqli;
+  $sql  = "SELECT agent_name from agents where agent_id='$id'";
+  $val = $mysqli->query($sql);
+  $val = mysqli_fetch_assoc($val);
+  $val = $val['agent_name'];
   if ($val){
    return $val;
  }else {
@@ -312,13 +430,13 @@ function loan_closed_by($loan_id){
 function deposit_accounts(){
   $mysqli = $this->mysqli;
   $sql = "SELECT * FROM deposit_accounts";
-    return $mysqli->query($sql);
+  return $mysqli->query($sql);
 }
 // All active accounts
 function active_deposit_accounts(){
   $mysqli = $this->mysqli;
   $sql = "SELECT * FROM deposit_accounts WHERE status='active'";
-    return $mysqli->query($sql);
+  return $mysqli->query($sql);
 }
 
 // Get loan report
@@ -333,6 +451,29 @@ function get_deposit_report($acc_id){
   $mysqli = $this->mysqli;
   $sql = "SELECT deposit.deposit_id AS id, amount AS deposit_amount, NULL AS withdrawal_amount, date_of_payment AS date, staff_id FROM deposit WHERE deposit.acc_id='$acc_id' UNION ALL SELECT withdrawals.withdrawal_id AS id, NULL AS deposit_amount, amount AS withdrawal_amount, date_of_withdrawal AS date, staff_id FROM withdrawals WHERE withdrawals.acc_id='$acc_id' ORDER BY date ASC";
   return $mysqli->query($sql);
+}
+
+// Edit deposit details
+function get_deposit($deposit_id){
+  $mysqli = $this->mysqli;
+  $sql = "SELECT `deposit_id`, `acc_id`, `amount`, `date_of_payment`, `inserted_on`, `staff_id` FROM `deposit` WHERE deposit_id='$deposit_id'";
+  $res = $mysqli->query($sql);
+  if (mysqli_num_rows($res)==0) {
+    return false;
+  }else{
+    return mysqli_fetch_assoc($res);
+  }
+}
+// Edit withdrawal details
+function get_withdrawal($withdrawal_id){
+  $mysqli = $this->mysqli;
+  $sql = "SELECT `withdrawal_id`, `acc_id`, `amount`, `date_of_withdrawal`, `inserted_on`, `staff_id` FROM `withdrawals` WHERE withdrawal_id='$withdrawal_id'";
+  $res = $mysqli->query($sql);
+  if (mysqli_num_rows($res)==0) {
+    return false;
+  }else{
+    return mysqli_fetch_assoc($res);
+  }
 }
 // End of class 
 }

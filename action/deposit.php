@@ -7,8 +7,11 @@ $validate = new validate();
 if (isset($_POST['make_deposit'])) {
 	// print_r($_POST);
 	$installment = $_POST['installment'];
-	$date_of_payment = $_POST['date_of_payment'];
-	$date_of_payment = date("Y-m-d", strtotime($date_of_payment));
+	if (isset($_POST['date_of_payment'])) {
+		$date_of_payment = date("Y-m-d", strtotime($_POST['date_of_payment']));
+	} else {
+		$date_of_payment = date("Y-m-d");
+	}
 	$acc_id = $_POST['acc_id'];
 	$staff_id = $_SESSION['login_id'];
 	

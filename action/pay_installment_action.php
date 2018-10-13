@@ -7,8 +7,11 @@ $insert = new insert();
 if (isset($_POST['pay_installment'])) {
 	print_r($_POST);
 	$amount = $_POST['amount'];
-	$date = $_POST['date'];
-	$date = date('Y-m-d', strtotime($date));
+	if (isset($_POST['date'])) {
+		$date = date("Y-m-d", strtotime($_POST['date']));
+	} else {
+		$date = date("Y-m-d");
+	}
 	$loan_id = $_POST['loan_id'];
 	$mem_id = $_POST['mem_id'];
 	$staff_id = $_SESSION['login_id'];

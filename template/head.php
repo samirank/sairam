@@ -67,6 +67,9 @@
               <li>
                 <a href="viewagent.php">View Agent</a>
               </li>
+              <li>
+                <a href="agentreport.php">Agent report</a>
+              </li>
             </ul>
           </li>
           <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu Levels">

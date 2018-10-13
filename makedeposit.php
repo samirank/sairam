@@ -37,18 +37,12 @@ $validate = new validate();
 								<tr>
 									<td><?php echo $row['account_no']; ?></td>
 									<td><?php echo $display->get_member_name($row['mem_id']); ?></td>
-									<td><?php echo $display->date_dmY($row['joining_date']); ?></td>
-									<td><?php $closing_date = date('d-M-Y', strtotime("+".$row['period']." months", strtotime($row['joining_date'])));
+									<td><?php echo $display->date_ymd($row['joining_date']); ?></td>
+									<td><?php $closing_date = date('Y-m-d', strtotime("+".($row['period']+1)." months", strtotime($row['joining_date'])));
 									echo $closing_date; ?></td>
 									<td>
 										<?php 
-										$current_balance = $display->display_current_balance($row['acc_id']);
-										$row_cb = mysqli_fetch_assoc($current_balance);
-										if (empty($row_cb['current_balance'])) {
-											echo "N/A";
-										}else{
-											echo "Rs. ".$row_cb['current_balance'];
-										}
+										echo $display->current_balance($row['acc_id']);
 										?>
 									</td>
 									<td>
@@ -112,7 +106,7 @@ $validate = new validate();
 									<div class="input-group-prepend">
 										<div class="input-group-text"> Rs.</div>
 									</div>
-									<input name="installment" class="form-control" id="amount" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount">
+									<input name="installment" class="form-control" id="amount" type="text" data-validation="required number" data-validation-error-msg="Enter a valid amount" autocomplete="off">
 								</div>
 							</div>
 						</div>
@@ -121,62 +115,68 @@ $validate = new validate();
 						<div class="form-group">
 							<div class="form-row">
 								<label for="date_of_payment">Date of payment</label>
-								<div class="input-group">
-									<input class="form-control datepicker" name="date_of_payment" data-validation="date" data-validation-format="dd-mm-yyyy" placeholder="dd-mm-yyyy">
+								<?php if ($_SESSION['login_role']=='admin'): ?>
+									<div class="input-group">
+										<input class="form-control datepicker" name="date_of_payment" data-validation="date" data-validation-format="dd-mm-yyyy" placeholder="dd-mm-yyyy" autocomplete="off">
+									</div>
+									<?php else: ?>
+										<div class="input-group">
+											<input class="form-control" name="date_of_payment" value="<?php echo date("d-m-Y"); ?>" disabled>
+										</div>
+									<?php endif ?>
+								</div>
+							</div>
+							<button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="getAmt()" data-target="#confirm_deposit">
+								Submit
+							</button>
+
+						</div>
+					</div>
+					<!-- Deposit modal -->
+					<div class="modal fade" id="confirm_deposit" tabindex="-1" role="dialog" aria-labelledby="confirm_deposit" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="confirm_deposit">Please confirm submit.</h5>
+									<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+										<span aria-hidden="true">×</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									Cick submit to make dposit to the account.
+									<br>
+									Name : <b><?php echo $display->get_member_name($row['mem_id']); ?></b>
+									<br>
+									Account No. : <b><?php echo $row['account_no']; ?></b>
+									<br>
+									Amount : <b>Rs. <span id="amtDiv"></span></b>
+								</div>
+								<div class="modal-footer">
+									<input type="hidden" name="acc_id" value="<?php echo $row['acc_id']; ?>">
+									<input type="hidden" name="mem_id" value="<?php echo $row['mem_id']; ?>">
+									<button type="submit" name="make_deposit" class="btn btn-primary">Submit</button>
 								</div>
 							</div>
 						</div>
-						<button type="button" class="btn btn-primary btn-block" data-toggle="modal" onclick="getAmt()" data-target="#confirm_deposit">
-							Submit
-						</button>
-
 					</div>
-				</div>
-				<!-- Deposit modal -->
-				<div class="modal fade" id="confirm_deposit" tabindex="-1" role="dialog" aria-labelledby="confirm_deposit" aria-hidden="true">
-					<div class="modal-dialog" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<h5 class="modal-title" id="confirm_deposit">Please confirm submit.</h5>
-								<button class="close" type="button" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">×</span>
-								</button>
-							</div>
-							<div class="modal-body">
-								Cick submit to make dposit to the account.
-								<br>
-								Name : <b><?php echo $display->get_member_name($row['mem_id']); ?></b>
-								<br>
-								Account No. : <b><?php echo $row['account_no']; ?></b>
-								<br>
-								Amount : <b>Rs. <span id="amtDiv"></span></b>
-							</div>
-							<div class="modal-footer">
-								<input type="hidden" name="acc_id" value="<?php echo $row['acc_id']; ?>">
-								<input type="hidden" name="mem_id" value="<?php echo $row['mem_id']; ?>">
-								<button type="submit" name="make_deposit" class="btn btn-primary">Submit</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</form>
-			<?php else: ?>
-				<div><h3>Account status not active. Please contact admin</h3></div>
-				<div><a href="pay_installment.php">Go back</a></div>
-			<?php endif ?>	
-		<?php endif ?>
+				</form>
+				<?php else: ?>
+					<div><h3>Account status not active. Please contact admin.</h3></div>
+					<div><a href="pay_installment.php">Go back</a></div>
+				<?php endif ?>	
+			<?php endif ?>
 
 
-		<?php
-		$script = "<script>
-		function getAmt(){
-			var amount = document.getElementById('amount').value;
-			var amtDiv = document.getElementById('amtDiv');
-			if (amount == '') {
-				amount = '0.00';
+			<?php
+			$script = "<script>
+			function getAmt(){
+				var amount = document.getElementById('amount').value;
+				var amtDiv = document.getElementById('amtDiv');
+				if (amount == '') {
+					amount = '0.00';
+				}
+				amtDiv.innerHTML = amount;
 			}
-			amtDiv.innerHTML = amount;
-		}
-		</script>";
-		?>
-		<?php include('template/foot.php'); ?>
+			</script>";
+			?>
+			<?php include('template/foot.php'); ?>
